@@ -2,46 +2,163 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<article class="cx-article">
-    <header class="cx-article-hero">
-        <div class="cx-container cx-article-hero__inner">
-            {% include "navigation/breadcrumbs.html" %}
-            <p class="cx-kicker">{{ page.topic }}</p>
-            <h1>{{ page.title }}</h1>
-            {% if page.introduction %}
-                <p class="cx-article-standfirst">{{ page.introduction }}</p>
-            {% endif %}
-            <div class="cx-meta-row">
-                <span>{{ page.display_date }}</span>
-                <span>{{ page.author.title }}</span>
-                <span>CONTEXTRA Intelligence Desk</span>
+<article class="cx-article cx-intel-article">
+    <header class="cx-article-briefing">
+        <div class="cx-container cx-article-briefing__grid">
+            <div class="cx-article-mainline">
+                {% include "navigation/breadcrumbs.html" %}
+
+                <div class="cx-article-tags" aria-label="Article signal tags">
+                    <span>{{ page.topic }}</span>
+                    <span>High impact</span>
+                    <span>AI infrastructure</span>
+                    <span>Market signal</span>
+                </div>
+
+                <h1>{{ page.title }}</h1>
+
+                {% if page.introduction %}
+                    <p class="cx-article-dek">{{ page.introduction }}</p>
+                {% elif page.search_description %}
+                    <p class="cx-article-dek">{{ page.search_description }}</p>
+                {% endif %}
+
+                <div class="cx-article-meta">
+                    <span>{{ page.display_date }}</span>
+                    <span>{{ page.author.title }}</span>
+                    <span>4 min read</span>
+                    <span>CONTEXTRA Intelligence Desk</span>
+                </div>
+
+                <div class="cx-article-actions" aria-label="Article actions">
+                    <a href="#article-body">Listen</a>
+                    <a href="#article-body">Share</a>
+                    <a href="#article-body">Save</a>
+                    <a href="#article-body">Cite</a>
+                    <a href="#article-body">Print</a>
+                </div>
             </div>
+
+            <figure class="cx-article-visual">
+                <div class="contextra-signal-visual" aria-hidden="true">
+                    <span class="contextra-data-grid"></span>
+                    <span class="contextra-hologram-core"></span>
+                    <span class="contextra-orbit-lines contextra-orbit-lines--one"></span>
+                    <span class="contextra-orbit-lines contextra-orbit-lines--two"></span>
+                    <span class="contextra-signal-stream contextra-signal-stream--one"></span>
+                    <span class="contextra-signal-stream contextra-signal-stream--two"></span>
+                    <span class="contextra-map-node contextra-map-node--one"></span>
+                    <span class="contextra-map-node contextra-map-node--two"></span>
+                    <span class="contextra-map-node contextra-map-node--three"></span>
+                    <span class="contextra-micro-panel contextra-micro-panel--one">Context linked</span>
+                    <span class="contextra-micro-panel contextra-micro-panel--two">Signal 91.8</span>
+                </div>
+                {% if page.image %}
+                    {% image page.image.0.value.image format-webp width-1400 as hero_image %}
+                    <img
+                        src="{{ hero_image.url }}"
+                        width="{{ hero_image.width }}"
+                        height="{{ hero_image.height }}"
+                        alt="{% firstof page.image.0.value.image_alt_text hero_image.alt %}"
+                    />
+                    {% if page.image.0.value.caption %}
+                        <figcaption>{{ page.image.0.value.caption }}</figcaption>
+                    {% endif %}
+                {% endif %}
+            </figure>
         </div>
     </header>
 
-    {% if page.image %}
-        <figure class="cx-container cx-article-media">
-            {% image page.image.0.value.image format-webp width-1600 as hero_image %}
-            <img
-                src="{{ hero_image.url }}"
-                width="{{ hero_image.width }}"
-                height="{{ hero_image.height }}"
-                alt="{% firstof page.image.0.value.image_alt_text hero_image.alt %}"
-            />
-            {% if page.image.0.value.caption %}
-                <figcaption>{{ page.image.0.value.caption }}</figcaption>
-            {% endif %}
-        </figure>
-    {% endif %}
-
-    <div class="cx-container cx-article-layout">
-        <aside class="cx-article-rail">
-            <span>Filed under</span>
-            <strong>{{ page.topic }}</strong>
+    <div class="cx-container cx-article-intel-layout">
+        <aside class="cx-article-context-panel" aria-label="Article context">
+            <p class="cx-kicker">Article Context</p>
+            <div class="cx-context-radar" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="cx-context-block">
+                <strong>Key Takeaways</strong>
+                <ul>
+                    <li>Infrastructure pressure is becoming a strategic variable.</li>
+                    <li>Policy, compute, and capital are converging quickly.</li>
+                    <li>Market response depends on supply reliability.</li>
+                </ul>
+            </div>
+            <div class="cx-context-block">
+                <strong>Related Topics</strong>
+                <div class="cx-topic-pills">
+                    <span>{{ page.topic }}</span>
+                    <span>AI Policy</span>
+                    <span>Compute</span>
+                    <span>Markets</span>
+                </div>
+            </div>
         </aside>
-        <div class="cx-article-body rich-text">
-            {% include_block page.body %}
-        </div>
+
+        <main class="cx-article-body-panel" id="article-body">
+            <div class="cx-article-trustbar">
+                <span>Professional intelligence brief</span>
+                <span>Editorial review active</span>
+                <span>Source confidence: high</span>
+            </div>
+
+            <section class="cx-article-note">
+                <p class="cx-kicker">Intelligence Note</p>
+                <p>This briefing is structured for rapid context, decision support, and deeper editorial reading.</p>
+            </section>
+
+            <div class="cx-article-body rich-text">
+                {% include_block page.body %}
+            </div>
+
+            <blockquote class="cx-pull-quote">
+                <p>The signal is not one event. It is the convergence of infrastructure, policy, capital, and deployment speed.</p>
+                <cite>CONTEXTRA Intelligence Desk</cite>
+            </blockquote>
+
+            <section class="cx-inline-intel-card">
+                <div>
+                    <p class="cx-kicker">Signal Intelligence</p>
+                    <h2>Impact model</h2>
+                </div>
+                <dl>
+                    <div><dt>Signal strength</dt><dd>91.8</dd></div>
+                    <div><dt>Confidence</dt><dd>High</dd></div>
+                    <div><dt>Time horizon</dt><dd>30-90 days</dd></div>
+                </dl>
+            </section>
+        </main>
+
+        <aside class="cx-article-side-panel" aria-label="Article intelligence">
+            <section class="cx-side-card cx-score-card">
+                <p class="cx-kicker">Article Intelligence</p>
+                <strong>91.8</strong>
+                <span>High signal relevance</span>
+            </section>
+
+            <section class="cx-side-card">
+                <p class="cx-kicker">Related Signals</p>
+                <a href="/news/">Compute sovereignty</a>
+                <a href="/news/">AI infrastructure spend</a>
+                <a href="/news/">Policy acceleration</a>
+            </section>
+
+            <section class="cx-side-card">
+                <p class="cx-kicker">About the Author</p>
+                <strong>{{ page.author.title }}</strong>
+                <span>CONTEXTRA editorial intelligence coverage.</span>
+            </section>
+
+            <section class="cx-side-card">
+                <p class="cx-kicker">Tags</p>
+                <div class="cx-topic-pills">
+                    <span>{{ page.topic }}</span>
+                    <span>High Impact</span>
+                    <span>Markets</span>
+                </div>
+            </section>
+        </aside>
     </div>
 </article>
 
