@@ -37,3 +37,32 @@ class HomePage(BasePage):
             heading="Featured section",
         ),
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        from contexta_news.news.models import ArticlePage
+
+        articles = list(
+            ArticlePage.objects.live()
+            .public()
+            .select_related("listing_image", "author", "topic")
+            .order_by("-first_published_at")[:12]
+        )
+
+        context["lead_article"] = articles[0] if articles else None
+        context["latest_signals"] = articles[1:5]
+        context["top_stories"] = articles[1:7] or articles[:6]
+        context["policy_stories"] = [
+            article for article in articles if "policy" in article.topic.title.lower()
+        ][:3]
+        context["company_stories"] = [
+            article
+            for article in articles
+            if any(
+                term in article.topic.title.lower()
+                for term in ("company", "companies", "model", "technology", "ai")
+            )
+        ][:3]
+
+        return context

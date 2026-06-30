@@ -1,48 +1,105 @@
-
 {% extends "base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-    <div class="site-padding site-container">
-        <div class="relative max-w-[872px] pt-32 tall:pt-40 pb-40 md:pb-60">
-            <h1 class="font-serif4 [word-spacing:-6px] font-bold text-7xl lg:text-10xl">
-                {{ page.title }}
-            </h1>
+<section class="cx-hero">
+    <div class="cx-container cx-newsroom-grid">
+        <article class="cx-lead-story">
+            <div class="cx-ticker" aria-label="News signal">
+                <span>Live Signal</span>
+                <p>AI systems, policy power, model infrastructure, and market intelligence.</p>
+            </div>
 
-            <div class="
-                absolute
-                overflow-hidden
-                z-[-1]
-                right-[-78px]
-                top-[98px]
-                w-52
-                h-52
-                md:right-[-131px]
-                md:top-[24px]
-                tall:md:top-[131px]
-                md:w-64
-                md:h-64
-                rotate-[32deg]
-                border-[3px]
-                rounded-3xl
-                border-dashed
-                border-mackerel-200"
-            >
-            </div>
-            <div class="max-w-[636px] pt-5 rich-text">
-                {{ page.introduction|richtext }}
-            </div>
-            {% if page.hero_cta %}
-                <div class="pt-10">
-                    {% include "components/button.html" with title=page.hero_cta.0.value.get_title url=page.hero_cta.0.value.get_url %}
+            {% if lead_article %}
+                <p class="cx-kicker">{{ lead_article.topic }}</p>
+                <h1><a href="{% pageurl lead_article %}">{{ lead_article.title }}</a></h1>
+                <p class="cx-lead-story__summary">
+                    {% firstof lead_article.listing_summary lead_article.plain_introduction lead_article.introduction %}
+                </p>
+                <div class="cx-meta-row">
+                    <span>{{ lead_article.display_date }}</span>
+                    <span>{{ lead_article.author.title }}</span>
                 </div>
+            {% else %}
+                <p class="cx-kicker">CONTEXTRA News</p>
+                <h1>{{ page.title }}</h1>
+                <p class="cx-lead-story__summary">
+                    {% firstof page.introduction "A command-center newsroom tracking AI, technology, companies, policy, markets, and research." %}
+                </p>
             {% endif %}
+        </article>
+
+        <aside class="cx-signal-panel" aria-label="Latest Signals">
+            <div class="cx-section-heading cx-section-heading--compact">
+                <p>Latest Signals</p>
+                <h2>Watchlist</h2>
+            </div>
+            <div class="cx-signal-list">
+                {% for article in latest_signals %}
+                    <a href="{% pageurl article %}">
+                        <span>{{ article.topic }}</span>
+                        <strong>{{ article.title }}</strong>
+                    </a>
+                {% empty %}
+                    <a href="/news/"><span>Desk</span><strong>Publish articles in Wagtail to populate this signal feed.</strong></a>
+                    <a href="/news/"><span>Policy</span><strong>Regulation, compute access, and public-sector adoption.</strong></a>
+                    <a href="/news/"><span>Markets</span><strong>Infrastructure, chips, cloud, and model economics.</strong></a>
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
+</section>
+
+<section class="cx-section">
+    <div class="cx-container">
+        <div class="cx-section-heading">
+            <p>Top Stories</p>
+            <h2>High-signal developments</h2>
+        </div>
+        <div class="cx-card-grid">
+            {% for article in top_stories %}
+                {% include "components/card--article.html" with page=article %}
+            {% empty %}
+                {% include "components/card.html" with page=page %}
+            {% endfor %}
         </div>
     </div>
+</section>
 
-    {% include_block page.body %}
+<section class="cx-section cx-section--split">
+    <div class="cx-container cx-two-column">
+        <div>
+            <div class="cx-section-heading">
+                <p>Policy & Power</p>
+                <h2>Governance, security, and state capacity</h2>
+            </div>
+            <div class="cx-stack">
+                {% for article in policy_stories %}
+                    {% include "components/card--article.html" with page=article variant="compact" %}
+                {% empty %}
+                    <p class="cx-empty-state">Tag articles with policy-related topics to populate this desk.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <div class="cx-section-heading">
+                <p>Companies & Models</p>
+                <h2>Labs, platforms, chips, and model releases</h2>
+            </div>
+            <div class="cx-stack">
+                {% for article in company_stories %}
+                    {% include "components/card--article.html" with page=article variant="compact" %}
+                {% empty %}
+                    <p class="cx-empty-state">Company and model coverage will appear here as the newsroom grows.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
 
-    {% include "components/related-pages.html" %}
-
+{% if page.body %}
+    <section class="cx-section">
+        {% include_block page.body %}
+    </section>
+{% endif %}
 {% endblock %}
-

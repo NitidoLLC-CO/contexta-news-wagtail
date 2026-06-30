@@ -1,19 +1,17 @@
-
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags %}
 
 {% if page.related_pages %}
-<section class="site-padding site-container pb-20 md:pb-40">
-
-    {% firstof page.featured_section_title 'Read more' as heading %}
-    {% include "components/streamfield/blocks/heading2_block.html" with value=heading %}
-
-    <div class="snap-x w-full flex gap-12 md:gap-16 lg:gap-20 overflow-x-auto">
-        {% for related_page in page.related_pages.specific %}
-            <div class="snap-start min-w-80">
+<section class="cx-related">
+    <div class="cx-container">
+        <div class="cx-section-heading">
+            <p>Related Intelligence</p>
+            <h2>{% firstof page.featured_section_title "Read next" %}</h2>
+        </div>
+        <div class="cx-related__rail">
+            {% for related_page in page.related_pages.specific %}
                 {% include "components/card.html" with page=related_page %}
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </section>
 {% endif %}
-
