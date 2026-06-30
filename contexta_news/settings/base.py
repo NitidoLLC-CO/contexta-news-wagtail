@@ -41,6 +41,7 @@ DEFAULT_ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     ".up.railway.app",
+    "healthcheck.railway.app",
 ]
 if RAILWAY_PUBLIC_DOMAIN:
     DEFAULT_ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)

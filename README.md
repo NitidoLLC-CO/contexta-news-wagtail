@@ -31,7 +31,7 @@ Required:
 DJANGO_SETTINGS_MODULE=contexta_news.settings.production
 SECRET_KEY=<long-random-secret>
 DATABASE_URL=${{Postgres.DATABASE_URL}}
-ALLOWED_HOSTS=.up.railway.app,<your-public-domain>
+ALLOWED_HOSTS=.up.railway.app,<your-public-domain>,healthcheck.railway.app
 CSRF_TRUSTED_ORIGINS=https://*.up.railway.app,https://<your-public-domain>
 WAGTAIL_SITE_NAME=CONTEXTRA News
 WAGTAILADMIN_BASE_URL=https://<your-public-domain>
