@@ -56,3 +56,23 @@ These sections are intentionally static in Phase 2A and isolated in `templates/p
 - Replace static fallback widgets with Wagtail snippets or API-backed data sources.
 - Add real newsletter capture handling if North Signal Brief becomes active.
 - Consider adding curated homepage slots instead of relying only on latest articles.
+
+## Phase 2A.1 Polish
+
+Phase 2A.1 corrects the homepage hero and mobile hierarchy without starting Phase 2B.
+
+Changes:
+
+- Replaced the plain radar/grid hero fallback with a reusable CONTEXTRA signal visual system.
+- Added `contextra-signal-visual`, `contextra-hologram-core`, `contextra-orbit-lines`, `contextra-data-grid`, signal streams, map nodes, and micro-panels.
+- Kept Wagtail article images available, but layered the holographic system over/behind them so weak placeholder images do not create blank panels.
+- Improved the Latest Signals rail with stronger glass panels, impact badges, timestamps, and hover depth.
+- Fixed mobile hero order so the visual no longer appears as a large block before the headline.
+- On mobile, the hero visual becomes a compact atmospheric background behind the editorial card content.
+
+Still unchanged:
+
+- Wagtail models and migrations
+- Article detail template
+- News listing template
+- Railway, Docker, database, production, and media settings
