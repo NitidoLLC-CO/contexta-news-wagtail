@@ -1,15 +1,19 @@
 {% load wagtailcore_tags %}
 {% wagtail_site as current_site %}
 
-<header class="cx-header">
-    <div class="cx-container cx-header__inner">
-        <a class="cx-wordmark" href="/">
-            <span class="cx-wordmark__brand">CONTEXTRA</span>
-            <span class="cx-wordmark__channel">News</span>
-            <span class="cx-wordmark__descriptor">AI Intelligence Newsroom</span>
+<header class="cx-shell" aria-label="CONTEXTRA global header">
+    <div class="cx-shell__bar cx-container">
+        <a class="cx-brand" href="/" aria-label="CONTEXTRA home">
+            <span class="cx-brand__mark" aria-hidden="true">
+                <span></span>
+            </span>
+            <span class="cx-brand__text">
+                <strong>CONTEXTRA</strong>
+                <em>Intelligence News</em>
+            </span>
         </a>
 
-        <nav class="cx-nav cx-nav--desktop" aria-label="Primary navigation">
+        <nav class="cx-primary-nav" aria-label="Primary navigation">
             <a href="/news/?topic=ai">AI</a>
             <a href="/news/?topic=technology">Technology</a>
             <a href="/news/?topic=companies">Companies</a>
@@ -18,22 +22,52 @@
             <a href="/news/?topic=research">Research</a>
         </nav>
 
-        <a class="cx-header__search" href="{% url 'search' %}" aria-label="Search CONTEXTRA News">Search</a>
+        <a class="cx-search-pill" href="{% url 'search' %}" aria-label="Search intelligence, topics, entities">
+            <span aria-hidden="true">⌕</span>
+            <span>Search intelligence, topics, entities...</span>
+        </a>
 
-        <details class="cx-mobile-nav">
-            <summary aria-label="Open navigation menu">
-                <span></span>
-                <span></span>
-            </summary>
-            <nav aria-label="Mobile navigation">
-                <a href="/news/?topic=ai">AI</a>
-                <a href="/news/?topic=technology">Technology</a>
-                <a href="/news/?topic=companies">Companies</a>
-                <a href="/news/?topic=policy">Policy</a>
-                <a href="/news/?topic=markets">Markets</a>
-                <a href="/news/?topic=research">Research</a>
-                <a href="{% url 'search' %}">Search</a>
-            </nav>
-        </details>
+        <div class="cx-shell__actions" aria-label="Utility actions">
+            <a href="/news/" aria-label="Signal settings">✦</a>
+            <details class="cx-mobile-nav">
+                <summary aria-label="Open navigation menu">
+                    <span></span>
+                    <span></span>
+                </summary>
+                <nav aria-label="Mobile navigation">
+                    <a href="/news/?topic=ai">AI</a>
+                    <a href="/news/?topic=technology">Technology</a>
+                    <a href="/news/?topic=companies">Companies</a>
+                    <a href="/news/?topic=policy">Policy</a>
+                    <a href="/news/?topic=markets">Markets</a>
+                    <a href="/news/?topic=research">Research</a>
+                    <a href="{% url 'search' %}">Search</a>
+                </nav>
+            </details>
+        </div>
+    </div>
+
+    <div class="cx-live-ticker" aria-label="Live signal ticker">
+        <div class="cx-container cx-live-ticker__track">
+            <strong>Live Signal Ticker</strong>
+            <span>OpenAI expands model context window to 2M tokens</span>
+            <em>2m ago</em>
+            <span>EU AI Act implementation guidelines published</span>
+            <em>15m ago</em>
+            <span>Nvidia unveils Blackwell Ultra platform</span>
+            <em>28m ago</em>
+            <span>India launches national compute initiative</span>
+            <em>45m ago</em>
+        </div>
+    </div>
+
+    <div class="cx-status-strip" aria-label="North Signal status metrics">
+        <div class="cx-container cx-status-strip__grid">
+            <div><span>North Signal Status</span><strong class="cx-positive">Active</strong></div>
+            <div><span>Systems Monitoring</span><strong>98.7%</strong></div>
+            <div><span>Signals Today</span><strong>1,248</strong></div>
+            <div><span>Market Sentiment</span><strong class="cx-positive">Bullish</strong><i class="cx-sparkline" aria-hidden="true"></i></div>
+            <div><span>Global Coverage</span><strong>87 Countries</strong></div>
+        </div>
     </div>
 </header>

@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<article class="cx-card">
+<article class="cx-card cx-story-card">
     <a class="cx-card__media" href="{% pageurl page %}" aria-label="{{ page.title }}">
         {% if page.listing_image %}
             {% image page.listing_image format-webp fill-900x600 as card_image %}
@@ -15,5 +15,9 @@
         </div>
         <h3><a href="{% pageurl page %}">{% firstof page.listing_title page.title %}</a></h3>
         <p>{% firstof page.listing_summary page.plain_introduction page.introduction %}</p>
+        <div class="cx-card__footer">
+            <span>CONTEXTRA Desk</span>
+            <i aria-hidden="true">→</i>
+        </div>
     </div>
 </article>

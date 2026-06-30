@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<article class="cx-card {% if variant == 'compact' %}cx-card--compact{% endif %}">
+<article class="cx-card cx-story-card {% if variant == 'compact' %}cx-card--compact{% endif %}">
     <a class="cx-card__media" href="{% pageurl page %}" aria-label="{{ page.title }}">
         {% if page.listing_image %}
             {% image page.listing_image format-webp fill-900x600 as card_image %}
@@ -16,8 +16,13 @@
         </div>
         <h3><a href="{% pageurl page %}">{% firstof page.listing_title page.title %}</a></h3>
         <p>{% firstof page.listing_summary page.plain_introduction page.introduction %}</p>
-        {% if page.author %}
-            <span class="cx-card__byline">{{ page.author.title }}</span>
-        {% endif %}
+        <div class="cx-card__footer">
+            {% if page.author %}
+                <span>{{ page.author.title }}</span>
+            {% else %}
+                <span>CONTEXTRA Desk</span>
+            {% endif %}
+            <i aria-hidden="true">→</i>
+        </div>
     </div>
 </article>

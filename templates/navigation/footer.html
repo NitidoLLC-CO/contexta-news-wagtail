@@ -1,25 +1,78 @@
 {% load wagtailcore_tags %}
 {% wagtail_site as current_site %}
 
+<section class="cx-ecosystem-strip" aria-label="CONTEXTRA platform strengths">
+    <div class="cx-container cx-ecosystem-strip__grid">
+        <article>
+            <span>◉</span>
+            <strong>Real-time signals</strong>
+            <p>Instant alerts on critical developments.</p>
+        </article>
+        <article>
+            <span>◇</span>
+            <strong>Deep intelligence</strong>
+            <p>Expert analysis and proprietary research.</p>
+        </article>
+        <article>
+            <span>◎</span>
+            <strong>Global perspective</strong>
+            <p>Coverage across 87 countries.</p>
+        </article>
+        <article>
+            <span>⬡</span>
+            <strong>Secure & private</strong>
+            <p>Professional-grade intelligence platform.</p>
+        </article>
+    </div>
+</section>
+
+<section class="cx-app-cta" aria-label="North Signal app">
+    <div class="cx-container cx-app-cta__panel">
+        <div>
+            <p class="cx-kicker">North Signal App</p>
+            <h2>Intelligence. Anywhere.</h2>
+            <div class="cx-store-badges" aria-label="App store badges">
+                <span>App Store</span>
+                <span>Google Play</span>
+            </div>
+        </div>
+        <div class="cx-app-cta__copy">
+            <h3>Stay Ahead. Everywhere.</h3>
+            <p>Access real-time signals, expert analysis, and personalized intelligence on the go.</p>
+        </div>
+        <a class="cx-arrow-link cx-app-cta__button" href="/news/">Explore the app</a>
+        <div class="cx-phone-ghost" aria-hidden="true"></div>
+    </div>
+</section>
+
 <footer class="cx-footer">
     <div class="cx-container cx-footer__grid">
-        <div>
-            <p class="cx-kicker">CONTEXTRA News</p>
-            <h2>AI intelligence for public decision makers.</h2>
+        <div class="cx-footer__brand">
+            <span class="cx-brand__mark" aria-hidden="true"><span></span></span>
+            <div>
+                <strong>CONTEXTRA</strong>
+                <em>Intelligence News</em>
+            </div>
+            <p>Intelligence that leads. News that matters.</p>
         </div>
-        <div class="cx-footer__links" aria-label="Footer navigation">
+        <nav class="cx-footer__links" aria-label="Footer navigation">
+            <a href="/news/">News</a>
             <a href="/news/?topic=ai">AI</a>
             <a href="/news/?topic=policy">Policy</a>
-            <a href="/news/?topic=companies">Companies</a>
+            <a href="/news/?topic=markets">Markets</a>
             <a href="{% url 'search' %}">Search</a>
-        </div>
-        <div class="cx-footer__contact">
-            <span>@contextra.news</span>
-            <span>Signal desk: global</span>
-        </div>
+        </nav>
+        <nav class="cx-footer__links" aria-label="Company navigation">
+            <a href="/news/">About</a>
+            <a href="/news/">Careers</a>
+            <a href="/news/">Contact</a>
+            <a href="/news/">Terms</a>
+            <a href="/news/">Privacy</a>
+            <a href="/news/">Security</a>
+        </nav>
     </div>
     <div class="cx-container cx-footer__bottom">
-        <span>&copy; {% now "Y" %} {{ current_site.site_name|default:"CONTEXTRA News" }}</span>
-        <span>Monolithic Wagtail newsroom platform</span>
+        <span>&copy; {% now "Y" %} {{ current_site.site_name|default:"CONTEXTRA News" }}. All rights reserved.</span>
+        <span>Powered by NÍTIDO®</span>
     </div>
 </footer>

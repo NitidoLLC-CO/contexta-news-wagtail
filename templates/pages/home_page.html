@@ -2,61 +2,101 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<section class="cx-hero">
-    <div class="cx-container cx-newsroom-grid">
-        <article class="cx-lead-story">
-            <div class="cx-ticker" aria-label="News signal">
-                <span>Live Signal</span>
-                <p>AI systems, policy power, model infrastructure, and market intelligence.</p>
+<section class="cx-home-hero" aria-label="Lead intelligence story">
+    <div class="cx-container cx-home-hero__grid">
+        <div class="cx-hero-index" aria-hidden="true">
+            <span>01</span>
+            <span>02</span>
+            <span>03</span>
+            <span>04</span>
+            <span>05</span>
+        </div>
+
+        <article class="cx-lead-system">
+            <div class="cx-lead-system__content">
+                {% if lead_article %}
+                    <p class="cx-kicker">{{ lead_article.topic }}</p>
+                    <h1><a href="{% pageurl lead_article %}">{{ lead_article.title }}</a></h1>
+                    <p class="cx-lead-system__summary">
+                        {% firstof lead_article.listing_summary lead_article.plain_introduction lead_article.introduction %}
+                    </p>
+                    <div class="cx-meta-row">
+                        <span>{{ lead_article.display_date }}</span>
+                        <span>{{ lead_article.author.title }}</span>
+                        <span>Signal strength 92.4</span>
+                    </div>
+                    <a class="cx-arrow-link" href="{% pageurl lead_article %}">Read Full Story</a>
+                {% else %}
+                    <p class="cx-kicker">Deployment Test</p>
+                    <h1>AI intelligence for a world moving faster than institutions.</h1>
+                    <p class="cx-lead-system__summary">
+                        CONTEXTRA tracks AI, technology, companies, policy, markets, and research through a future-ready intelligence newsroom.
+                    </p>
+                    <div class="cx-meta-row">
+                        <span>Live desk</span>
+                        <span>CONTEXTRA Editorial</span>
+                        <span>Signal strength 92.4</span>
+                    </div>
+                    <a class="cx-arrow-link" href="/news/">Read Full Story</a>
+                {% endif %}
             </div>
 
-            {% if lead_article %}
-                <p class="cx-kicker">{{ lead_article.topic }}</p>
-                <h1><a href="{% pageurl lead_article %}">{{ lead_article.title }}</a></h1>
-                <p class="cx-lead-story__summary">
-                    {% firstof lead_article.listing_summary lead_article.plain_introduction lead_article.introduction %}
-                </p>
-                <div class="cx-meta-row">
-                    <span>{{ lead_article.display_date }}</span>
-                    <span>{{ lead_article.author.title }}</span>
-                </div>
-            {% else %}
-                <p class="cx-kicker">CONTEXTRA News</p>
-                <h1>{{ page.title }}</h1>
-                <p class="cx-lead-story__summary">
-                    {% firstof page.introduction "A command-center newsroom tracking AI, technology, companies, policy, markets, and research." %}
-                </p>
-            {% endif %}
+            <div class="cx-lead-system__visual">
+                {% if lead_article and lead_article.listing_image %}
+                    {% image lead_article.listing_image format-webp fill-1000x680 as lead_image %}
+                    <img src="{{ lead_image.url }}" width="{{ lead_image.width }}" height="{{ lead_image.height }}" alt="{{ lead_image.alt }}">
+                {% else %}
+                    <div class="cx-holo-visual" aria-hidden="true">
+                        <span class="cx-holo-visual__mark"></span>
+                        <span class="cx-holo-visual__line cx-holo-visual__line--one"></span>
+                        <span class="cx-holo-visual__line cx-holo-visual__line--two"></span>
+                        <span class="cx-holo-visual__node cx-holo-visual__node--one">Confidence High</span>
+                        <span class="cx-holo-visual__node cx-holo-visual__node--two">Signal 92.4</span>
+                    </div>
+                {% endif %}
+            </div>
         </article>
 
-        <aside class="cx-signal-panel" aria-label="Latest Signals">
-            <div class="cx-section-heading cx-section-heading--compact">
-                <p>Latest Signals</p>
-                <h2>Watchlist</h2>
+        <aside class="cx-live-panel" aria-label="Live Signals">
+            <div class="cx-panel-heading">
+                <p>Live Signals</p>
+                <a href="/news/">View all</a>
             </div>
-            <div class="cx-signal-list">
+            <div class="cx-live-panel__list">
                 {% for article in latest_signals %}
                     <a href="{% pageurl article %}">
                         <span>{{ article.topic }}</span>
                         <strong>{{ article.title }}</strong>
+                        <em>{% firstof article.display_date "Now" %}</em>
                     </a>
                 {% empty %}
-                    <a href="/news/"><span>Desk</span><strong>Publish articles in Wagtail to populate this signal feed.</strong></a>
-                    <a href="/news/"><span>Policy</span><strong>Regulation, compute access, and public-sector adoption.</strong></a>
-                    <a href="/news/"><span>Markets</span><strong>Infrastructure, chips, cloud, and model economics.</strong></a>
+                    <a href="/news/"><span>AI Infrastructure</span><strong>Global GPU supply tightens as demand accelerates</strong><em>High impact</em></a>
+                    <a href="/news/"><span>Policy & Regulation</span><strong>U.S. releases AI compute export control framework</strong><em>High impact</em></a>
+                    <a href="/news/"><span>Market Intelligence</span><strong>Enterprise AI spending forecast raised to $215B</strong><em>Medium impact</em></a>
                 {% endfor %}
             </div>
         </aside>
     </div>
 </section>
 
-<section class="cx-section">
+<section class="cx-top-stories" aria-label="Top Stories">
     <div class="cx-container">
-        <div class="cx-section-heading">
-            <p>Top Stories</p>
-            <h2>High-signal developments</h2>
+        <div class="cx-section-toolbar">
+            <div>
+                <p class="cx-kicker">Top Stories</p>
+                <h2>Curated high-signal developments</h2>
+            </div>
+            <div class="cx-filter-chips" aria-label="Story filters">
+                <a href="/news/">All</a>
+                <a href="/news/?topic=ai">AI</a>
+                <a href="/news/?topic=technology">Tech</a>
+                <a href="/news/?topic=policy">Policy</a>
+                <a href="/news/?topic=markets">Markets</a>
+            </div>
+            <a class="cx-view-all" href="/news/">View all</a>
         </div>
-        <div class="cx-card-grid">
+
+        <div class="cx-story-grid">
             {% for article in top_stories %}
                 {% include "components/card--article.html" with page=article %}
             {% empty %}
@@ -66,40 +106,105 @@
     </div>
 </section>
 
-<section class="cx-section cx-section--split">
-    <div class="cx-container cx-two-column">
-        <div>
-            <div class="cx-section-heading">
-                <p>Policy & Power</p>
-                <h2>Governance, security, and state capacity</h2>
+<section class="cx-intelligence-grid" aria-label="Intelligence modules">
+    <div class="cx-container cx-intelligence-grid__layout">
+        <article class="cx-data-panel cx-model-tracker">
+            <div class="cx-panel-heading">
+                <p>AI Models Tracker</p>
+                <a href="/news/">View all</a>
             </div>
-            <div class="cx-stack">
-                {% for article in policy_stories %}
-                    {% include "components/card--article.html" with page=article variant="compact" %}
-                {% empty %}
-                    <p class="cx-empty-state">Tag articles with policy-related topics to populate this desk.</p>
-                {% endfor %}
+            <div class="cx-rank-list">
+                <div><span>OpenAI GPT-5</span><strong>95.2</strong><em>+2.1</em></div>
+                <div><span>Claude 4 Opus</span><strong>93.7</strong><em>+1.8</em></div>
+                <div><span>Gemini 2.5 Pro</span><strong>92.1</strong><em>+1.2</em></div>
+                <div><span>Llama 4 Maverick</span><strong>90.3</strong><em>+0.9</em></div>
+                <div><span>Qwen 2.5 Max</span><strong>88.6</strong><em>+0.7</em></div>
             </div>
-        </div>
-        <div>
-            <div class="cx-section-heading">
-                <p>Companies & Models</p>
-                <h2>Labs, platforms, chips, and model releases</h2>
+        </article>
+
+        <article class="cx-data-panel cx-watchlist">
+            <div class="cx-panel-heading">
+                <p>Watchlist</p>
+                <a href="/news/">Manage</a>
             </div>
-            <div class="cx-stack">
-                {% for article in company_stories %}
-                    {% include "components/card--article.html" with page=article variant="compact" %}
-                {% empty %}
-                    <p class="cx-empty-state">Company and model coverage will appear here as the newsroom grows.</p>
-                {% endfor %}
+            <div class="cx-watchlist__rows">
+                <div><strong>NVDA</strong><span>NVIDIA Corporation</span><i></i><em class="cx-positive">+3.4%</em></div>
+                <div><strong>MSFT</strong><span>Microsoft Corporation</span><i></i><em class="cx-positive">+1.1%</em></div>
+                <div><strong>GOOGL</strong><span>Alphabet Inc.</span><i></i><em class="cx-positive">+2.14%</em></div>
+                <div><strong>AVGO</strong><span>Broadcom Inc.</span><i class="cx-sparkline--red"></i><em class="cx-negative">-0.8%</em></div>
+                <div><strong>TSM</strong><span>Taiwan Semiconductor</span><i></i><em class="cx-positive">+1.06%</em></div>
             </div>
-        </div>
+        </article>
+
+        <article class="cx-data-panel cx-signal-map">
+            <div class="cx-panel-heading">
+                <p>Signal Map</p>
+                <span>Live global activity</span>
+            </div>
+            <div class="cx-map-field" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <a class="cx-arrow-link" href="/news/">View interactive map</a>
+        </article>
+
+        <article class="cx-data-panel cx-trending">
+            <div class="cx-panel-heading">
+                <p>Trending Signals</p>
+                <span>Last 24 hours</span>
+            </div>
+            <ol>
+                <li><span>AI Compute Sovereignty</span><em>High</em></li>
+                <li><span>Agentic AI Platforms</span><em>High</em></li>
+                <li><span>Energy for AI Infrastructure</span><em>Medium</em></li>
+                <li><span>Robotics & Physical AI</span><em>Medium</em></li>
+                <li><span>Synthetic Data</span><em>Rising</em></li>
+            </ol>
+            <a class="cx-arrow-link" href="/news/">View all signals</a>
+        </article>
+
+        <article class="cx-data-panel cx-analysis">
+            <div class="cx-panel-heading">
+                <p>Analysis & Insights</p>
+                <span>Expert perspectives</span>
+            </div>
+            <div class="cx-analysis__visual" aria-hidden="true"></div>
+            <h3>The great infrastructure realignment: powering the AI century</h3>
+            <p>By N. Ortiz · Senior Analyst · 3h ago</p>
+            <a class="cx-arrow-link" href="/news/">View all analysis</a>
+        </article>
+
+        <article class="cx-data-panel cx-research">
+            <div class="cx-panel-heading">
+                <p>Research Briefs</p>
+                <span>Curated intelligence</span>
+            </div>
+            <div class="cx-brief-list">
+                <a href="/news/"><span>▣</span><strong>Compute Access Inequality</strong><em>2h ago</em></a>
+                <a href="/news/"><span>▣</span><strong>Model Robustness Benchmark</strong><em>4h ago</em></a>
+                <a href="/news/"><span>▣</span><strong>AI & Labor Market Impact</strong><em>6h ago</em></a>
+            </div>
+            <a class="cx-arrow-link" href="/news/">View all research</a>
+        </article>
+
+        <article class="cx-data-panel cx-north-brief">
+            <p class="cx-kicker">North Signal Brief</p>
+            <h3>Daily intelligence delivered</h3>
+            <p>The essential intelligence brief. Every morning.</p>
+            <form class="cx-brief-form" action="/news/" method="get">
+                <label class="sr-only" for="north-signal-email">Email</label>
+                <input id="north-signal-email" type="email" placeholder="Enter your email">
+                <button type="submit" aria-label="Subscribe">→</button>
+            </form>
+            <span>Trusted by 45,000+ professionals</span>
+        </article>
     </div>
 </section>
 
 {% if page.body %}
-    <section class="cx-section">
-        {% include_block page.body %}
+    <section class="cx-section cx-home-body">
+        <div class="cx-container">
+            {% include_block page.body %}
+        </div>
     </section>
 {% endif %}
 {% endblock %}
