@@ -24,6 +24,7 @@ WAGTAIL_REDIRECTS_FILE_STORAGE = "cache"
 
 # Force HTTPS redirect (enabled by default!)
 SECURE_SSL_REDIRECT = True
+SECURE_REDIRECT_EXEMPT = [r"^health/$"]
 SECURE_HSTS_SECONDS = int(os.environ.get("SECURE_HSTS_SECONDS", 31_536_000))
 SECURE_HSTS_INCLUDE_SUBDOMAINS = (
     os.environ.get("SECURE_HSTS_INCLUDE_SUBDOMAINS", "true").lower()

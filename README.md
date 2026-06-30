@@ -85,6 +85,7 @@ The startup script fails fast if `DATABASE_URL` is missing, so production does n
 
 After each GitHub push and Railway deployment:
 
+- `/health/` passes Railway healthchecks.
 - Homepage loads at the Railway public URL.
 - `/admin/` loads.
 - Static CSS/JS loads correctly.

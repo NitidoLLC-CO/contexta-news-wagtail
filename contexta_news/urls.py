@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponse
 from django.urls import include, path
 from django.contrib import admin
 
@@ -8,7 +9,13 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from contexta_news.search import views as search_views
 
+
+def healthcheck(request):
+    return HttpResponse("ok", content_type="text/plain")
+
+
 urlpatterns = [
+    path("health/", healthcheck, name="healthcheck"),
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
