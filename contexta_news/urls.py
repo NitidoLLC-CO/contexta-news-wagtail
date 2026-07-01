@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.contrib import admin
+from django.views.generic import TemplateView
 from django.views.static import serve
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -21,6 +22,11 @@ urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
+    path(
+        "privacy-policy/",
+        TemplateView.as_view(template_name="pages/privacy_policy.html"),
+        name="privacy_policy",
+    ),
 ]
 
 
