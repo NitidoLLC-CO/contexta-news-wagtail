@@ -1,7 +1,13 @@
 {% extends "base_page.html" %}
-{% load static wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags intelligence_tags %}
 
 {% block content %}
+{% active_live_signals 4 as admin_live_signals %}
+{% active_model_tracker_items 5 as model_tracker_items %}
+{% active_watchlist_items 5 as watchlist_items %}
+{% active_trending_topics 5 as trending_topics %}
+{% active_research_briefs 3 as research_briefs %}
+{% active_north_signal_brief as north_signal_brief %}
 <section class="cx-home-hero" aria-label="Lead intelligence story">
     <div class="cx-container cx-home-hero__grid">
         <div class="cx-hero-index" aria-hidden="true">
@@ -80,18 +86,29 @@
                 <a href="/news/">View all</a>
             </div>
             <div class="cx-live-panel__list">
-                {% for article in latest_signals %}
-                    <a href="{% pageurl article %}">
-                        <span>{{ article.topic }}</span>
-                        <strong>{{ article.title }}</strong>
-                        <em class="cx-impact-badge">High impact</em>
-                        <small>{% firstof article.display_date "Now" %}</small>
-                    </a>
-                {% empty %}
+                {% if admin_live_signals %}
+                    {% for signal in admin_live_signals %}
+                        <a href="{{ signal.link_url }}">
+                            <span>{% firstof signal.category "Intelligence" %}</span>
+                            <strong>{{ signal.title }}</strong>
+                            <em class="cx-impact-badge {{ signal.impact_badge_class }}">{{ signal.impact_label }}</em>
+                            <small>{{ signal.published_at|timesince }} ago</small>
+                        </a>
+                    {% endfor %}
+                {% elif latest_signals %}
+                    {% for article in latest_signals %}
+                        <a href="{% pageurl article %}">
+                            <span>{{ article.topic }}</span>
+                            <strong>{{ article.title }}</strong>
+                            <em class="cx-impact-badge">High impact</em>
+                            <small>{% firstof article.display_date "Now" %}</small>
+                        </a>
+                    {% endfor %}
+                {% else %}
                     <a href="/news/"><span>AI Infrastructure</span><strong>Global GPU supply tightens as demand accelerates</strong><em class="cx-impact-badge">High impact</em><small>2m ago</small></a>
                     <a href="/news/"><span>Policy & Regulation</span><strong>U.S. releases AI compute export control framework</strong><em class="cx-impact-badge">High impact</em><small>15m ago</small></a>
                     <a href="/news/"><span>Market Intelligence</span><strong>Enterprise AI spending forecast raised to $215B</strong><em class="cx-impact-badge cx-impact-badge--medium">Medium impact</em><small>28m ago</small></a>
-                {% endfor %}
+                {% endif %}
             </div>
         </aside>
     </div>
@@ -138,11 +155,15 @@
                 <a href="/news/">View all</a>
             </div>
             <div class="cx-rank-list">
-                <div><span>OpenAI GPT-5</span><strong>95.2</strong><em>+2.1</em></div>
-                <div><span>Claude 4 Opus</span><strong>93.7</strong><em>+1.8</em></div>
-                <div><span>Gemini 2.5 Pro</span><strong>92.1</strong><em>+1.2</em></div>
-                <div><span>Llama 4 Maverick</span><strong>90.3</strong><em>+0.9</em></div>
-                <div><span>Qwen 2.5 Max</span><strong>88.6</strong><em>+0.7</em></div>
+                {% for model in model_tracker_items %}
+                    <div><span>{{ model.model_name }}</span><strong>{{ model.score }}</strong><em>{% firstof model.delta model.status %}</em></div>
+                {% empty %}
+                    <div><span>OpenAI GPT-5</span><strong>95.2</strong><em>+2.1</em></div>
+                    <div><span>Claude 4 Opus</span><strong>93.7</strong><em>+1.8</em></div>
+                    <div><span>Gemini 2.5 Pro</span><strong>92.1</strong><em>+1.2</em></div>
+                    <div><span>Llama 4 Maverick</span><strong>90.3</strong><em>+0.9</em></div>
+                    <div><span>Qwen 2.5 Max</span><strong>88.6</strong><em>+0.7</em></div>
+                {% endfor %}
             </div>
         </article>
 
@@ -152,11 +173,15 @@
                 <a href="/news/">Manage</a>
             </div>
             <div class="cx-watchlist__rows">
-                <div><strong>NVDA</strong><span>NVIDIA Corporation</span><i></i><em class="cx-positive">+3.4%</em></div>
-                <div><strong>MSFT</strong><span>Microsoft Corporation</span><i></i><em class="cx-positive">+1.1%</em></div>
-                <div><strong>GOOGL</strong><span>Alphabet Inc.</span><i></i><em class="cx-positive">+2.14%</em></div>
-                <div><strong>AVGO</strong><span>Broadcom Inc.</span><i class="cx-sparkline--red"></i><em class="cx-negative">-0.8%</em></div>
-                <div><strong>TSM</strong><span>Taiwan Semiconductor</span><i></i><em class="cx-positive">+1.06%</em></div>
+                {% for item in watchlist_items %}
+                    <div><strong>{{ item.ticker }}</strong><span>{{ item.company_name }}</span><i{% if item.sparkline_class %} class="{{ item.sparkline_class }}"{% endif %}></i><em{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</em></div>
+                {% empty %}
+                    <div><strong>NVDA</strong><span>NVIDIA Corporation</span><i></i><em class="cx-positive">+3.4%</em></div>
+                    <div><strong>MSFT</strong><span>Microsoft Corporation</span><i></i><em class="cx-positive">+1.1%</em></div>
+                    <div><strong>GOOGL</strong><span>Alphabet Inc.</span><i></i><em class="cx-positive">+2.14%</em></div>
+                    <div><strong>AVGO</strong><span>Broadcom Inc.</span><i class="cx-sparkline--red"></i><em class="cx-negative">-0.8%</em></div>
+                    <div><strong>TSM</strong><span>Taiwan Semiconductor</span><i></i><em class="cx-positive">+1.06%</em></div>
+                {% endfor %}
             </div>
         </article>
 
@@ -177,11 +202,15 @@
                 <span>Last 24 hours</span>
             </div>
             <ol>
-                <li><span>AI Compute Sovereignty</span><em>High</em></li>
-                <li><span>Agentic AI Platforms</span><em>High</em></li>
-                <li><span>Energy for AI Infrastructure</span><em>Medium</em></li>
-                <li><span>Robotics & Physical AI</span><em>Medium</em></li>
-                <li><span>Synthetic Data</span><em>Rising</em></li>
+                {% for topic in trending_topics %}
+                    <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
+                {% empty %}
+                    <li><span>AI Compute Sovereignty</span><em>High</em></li>
+                    <li><span>Agentic AI Platforms</span><em>High</em></li>
+                    <li><span>Energy for AI Infrastructure</span><em>Medium</em></li>
+                    <li><span>Robotics & Physical AI</span><em>Medium</em></li>
+                    <li><span>Synthetic Data</span><em>Rising</em></li>
+                {% endfor %}
             </ol>
             <a class="cx-arrow-link" href="/news/">View all signals</a>
         </article>
@@ -203,23 +232,27 @@
                 <span>Curated intelligence</span>
             </div>
             <div class="cx-brief-list">
-                <a href="/news/"><span>▣</span><strong>Compute Access Inequality</strong><em>2h ago</em></a>
-                <a href="/news/"><span>▣</span><strong>Model Robustness Benchmark</strong><em>4h ago</em></a>
-                <a href="/news/"><span>▣</span><strong>AI & Labor Market Impact</strong><em>6h ago</em></a>
+                {% for brief in research_briefs %}
+                    <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
+                {% empty %}
+                    <a href="/news/"><span>+</span><strong>Compute Access Inequality</strong><em>2h ago</em></a>
+                    <a href="/news/"><span>+</span><strong>Model Robustness Benchmark</strong><em>4h ago</em></a>
+                    <a href="/news/"><span>+</span><strong>AI &amp; Labor Market Impact</strong><em>6h ago</em></a>
+                {% endfor %}
             </div>
             <a class="cx-arrow-link" href="/news/">View all research</a>
         </article>
 
         <article class="cx-data-panel cx-north-brief">
-            <p class="cx-kicker">North Signal Brief</p>
-            <h3>Daily intelligence delivered</h3>
-            <p>The essential intelligence brief. Every morning.</p>
-            <form class="cx-brief-form" action="/news/" method="get">
+            <p class="cx-kicker">{% firstof north_signal_brief.subtitle "North Signal Brief" %}</p>
+            <h3>{% firstof north_signal_brief.title "Daily intelligence delivered" %}</h3>
+            <p>{% firstof north_signal_brief.body "The essential intelligence brief. Every morning." %}</p>
+            <form class="cx-brief-form" action="{% firstof north_signal_brief.link_url '/news/' %}" method="get">
                 <label class="sr-only" for="north-signal-email">Email</label>
-                <input id="north-signal-email" type="email" placeholder="Enter your email">
-                <button type="submit" aria-label="Subscribe">→</button>
+                <input id="north-signal-email" type="email" placeholder="{% firstof north_signal_brief.email_placeholder 'Enter your email' %}">
+                <button type="submit" aria-label="{% firstof north_signal_brief.cta_label 'Subscribe' %}">-&gt;</button>
             </form>
-            <span>Trusted by 45,000+ professionals</span>
+            <span>{% firstof north_signal_brief.trust_text "Trusted by 45,000+ professionals" %}</span>
         </article>
     </div>
 </section>

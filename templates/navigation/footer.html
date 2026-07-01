@@ -1,5 +1,6 @@
-{% load wagtailcore_tags static %}
+{% load wagtailcore_tags static intelligence_tags %}
 {% wagtail_site as current_site %}
+{% active_app_ecosystem_cta as app_ecosystem_cta %}
 
 <section class="cx-ecosystem-strip" aria-label="CONTEXTRA platform strengths">
     <div class="cx-container cx-ecosystem-strip__grid">
@@ -29,18 +30,26 @@
 <section class="cx-app-cta" aria-label="North Signal app">
     <div class="cx-container cx-app-cta__panel">
         <div>
-            <p class="cx-kicker">North Signal App</p>
-            <h2>Intelligence. Anywhere.</h2>
+            <p class="cx-kicker">{% firstof app_ecosystem_cta.subtitle "North Signal App" %}</p>
+            <h2>{% firstof app_ecosystem_cta.title "Intelligence. Anywhere." %}</h2>
             <div class="cx-store-badges" aria-label="App store badges">
-                <span>App Store</span>
-                <span>Google Play</span>
+                {% if app_ecosystem_cta.app_store_url %}
+                    <a href="{{ app_ecosystem_cta.app_store_url }}">App Store</a>
+                {% else %}
+                    <span>App Store</span>
+                {% endif %}
+                {% if app_ecosystem_cta.google_play_url %}
+                    <a href="{{ app_ecosystem_cta.google_play_url }}">Google Play</a>
+                {% else %}
+                    <span>Google Play</span>
+                {% endif %}
             </div>
         </div>
         <div class="cx-app-cta__copy">
             <h3>Stay Ahead. Everywhere.</h3>
-            <p>Access real-time signals, expert analysis, and personalized intelligence on the go.</p>
+            <p>{% firstof app_ecosystem_cta.body "Access real-time signals, expert analysis, and personalized intelligence on the go." %}</p>
         </div>
-        <a class="cx-arrow-link cx-app-cta__button" href="/news/">Explore the app</a>
+        <a class="cx-arrow-link cx-app-cta__button" href="{% firstof app_ecosystem_cta.link_url '/news/' %}">{% firstof app_ecosystem_cta.cta_label "Explore the app" %}</a>
         <div class="cx-phone-ghost cx-phone-ghost--asset" aria-hidden="true">
             <img src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
         </div>

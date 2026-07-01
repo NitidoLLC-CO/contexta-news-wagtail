@@ -1,7 +1,9 @@
 {% extends "base_page.html" %}
-{% load static wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags intelligence_tags %}
 
 {% block content %}
+{% active_watchlist_items 3 as article_watchlist_items %}
+{% active_live_signals 3 as article_related_signals %}
 <article class="cx-article cx-intel-article">
     <header class="cx-article-briefing">
         <div class="cx-container cx-article-briefing__grid">
@@ -141,17 +143,25 @@
             <section class="cx-side-card">
                 <p class="cx-kicker">Market Snapshot</p>
                 <div class="cx-market-snapshot">
-                    <div><strong>NVDA</strong><span class="cx-positive">+3.4%</span></div>
-                    <div><strong>MSFT</strong><span class="cx-positive">+1.1%</span></div>
-                    <div><strong>AVGO</strong><span class="cx-negative">-0.8%</span></div>
+                    {% for item in article_watchlist_items %}
+                        <div><strong>{{ item.ticker }}</strong><span{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</span></div>
+                    {% empty %}
+                        <div><strong>NVDA</strong><span class="cx-positive">+3.4%</span></div>
+                        <div><strong>MSFT</strong><span class="cx-positive">+1.1%</span></div>
+                        <div><strong>AVGO</strong><span class="cx-negative">-0.8%</span></div>
+                    {% endfor %}
                 </div>
             </section>
 
             <section class="cx-side-card">
                 <p class="cx-kicker">Related Signals</p>
-                <a href="/news/">Compute sovereignty</a>
-                <a href="/news/">AI infrastructure spend</a>
-                <a href="/news/">Policy acceleration</a>
+                {% for signal in article_related_signals %}
+                    <a href="{{ signal.link_url }}">{{ signal.title }}</a>
+                {% empty %}
+                    <a href="/news/">Compute sovereignty</a>
+                    <a href="/news/">AI infrastructure spend</a>
+                    <a href="/news/">Policy acceleration</a>
+                {% endfor %}
             </section>
 
             <section class="cx-side-card">

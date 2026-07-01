@@ -1,7 +1,12 @@
 {% extends "base_page.html" %}
-{% load static wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags intelligence_tags %}
 
 {% block content %}
+{% active_live_signals 5 as admin_live_signals %}
+{% active_status_metrics 4 as section_metrics %}
+{% active_trending_topics 3 as trending_topics %}
+{% active_research_briefs 3 as research_briefs %}
+{% active_north_signal_brief as north_signal_brief %}
 <section class="cx-section-command" aria-label="CONTEXTRA section command center">
     <div class="cx-container cx-section-command__grid">
         <div class="cx-section-command__index" aria-hidden="true">
@@ -32,10 +37,14 @@
             </p>
 
             <div class="cx-section-command__metrics" aria-label="Section metrics">
-                <span><strong>1,248</strong>Signals today</span>
-                <span><strong>94.6</strong>Section score</span>
-                <span><strong>87</strong>Countries</span>
-                <span><strong>Live</strong>Desk active</span>
+                {% for metric in section_metrics %}
+                    <span><strong>{{ metric.value }}</strong>{{ metric.label }}</span>
+                {% empty %}
+                    <span><strong>1,248</strong>Signals today</span>
+                    <span><strong>94.6</strong>Section score</span>
+                    <span><strong>87</strong>Countries</span>
+                    <span><strong>Live</strong>Desk active</span>
+                {% endfor %}
             </div>
         </div>
 
@@ -51,7 +60,15 @@
                 <p>Live Updates</p>
                 <span>Now tracking</span>
             </div>
-            {% if paginator_page.object_list %}
+            {% if admin_live_signals %}
+                {% for signal in admin_live_signals %}
+                    <a href="{{ signal.link_url }}">
+                        <small>{{ signal.published_at|timesince }} ago</small>
+                        <strong>{{ signal.title }}</strong>
+                        <span>{% firstof signal.category "Intelligence" %}</span>
+                    </a>
+                {% endfor %}
+            {% elif paginator_page.object_list %}
                 {% for subpage in paginator_page %}
                     {% if forloop.counter <= 3 %}
                         {% with signal=subpage.specific %}
@@ -143,9 +160,13 @@
             <section class="cx-rail-panel cx-trending-mini">
                 <div class="cx-panel-heading"><p>Trending Topics</p><span>24h</span></div>
                 <ol>
-                    <li><span>Compute sovereignty</span><em>High</em></li>
-                    <li><span>Model governance</span><em>High</em></li>
-                    <li><span>Semiconductor policy</span><em>Rising</em></li>
+                    {% for topic in trending_topics %}
+                        <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
+                    {% empty %}
+                        <li><span>Compute sovereignty</span><em>High</em></li>
+                        <li><span>Model governance</span><em>High</em></li>
+                        <li><span>Semiconductor policy</span><em>Rising</em></li>
+                    {% endfor %}
                 </ol>
             </section>
         </aside>
@@ -194,10 +215,10 @@
             </section>
 
             <section class="cx-rail-panel cx-north-signal-mini">
-                <p class="cx-kicker">North Signal Brief</p>
-                <h3>Daily intelligence delivered</h3>
-                <p>The essential morning brief for AI, markets, policy, and power.</p>
-                <a class="cx-arrow-link" href="/news/">Preview brief</a>
+                <p class="cx-kicker">{% firstof north_signal_brief.subtitle "North Signal Brief" %}</p>
+                <h3>{% firstof north_signal_brief.title "Daily intelligence delivered" %}</h3>
+                <p>{% firstof north_signal_brief.body "The essential morning brief for AI, markets, policy, and power." %}</p>
+                <a class="cx-arrow-link" href="{% firstof north_signal_brief.link_url '/news/' %}">{% firstof north_signal_brief.cta_label "Preview brief" %}</a>
             </section>
         </aside>
     </div>
@@ -208,9 +229,13 @@
         <article class="cx-data-panel cx-research">
             <div class="cx-panel-heading"><p>Policy Documents &amp; Research</p><span>Curated intelligence</span></div>
             <div class="cx-brief-list">
-                <a href="/news/"><span>+</span><strong>Compute Access Inequality</strong><em>2h ago</em></a>
-                <a href="/news/"><span>+</span><strong>Model Governance Benchmark</strong><em>4h ago</em></a>
-                <a href="/news/"><span>+</span><strong>AI &amp; Labor Market Impact</strong><em>6h ago</em></a>
+                {% for brief in research_briefs %}
+                    <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
+                {% empty %}
+                    <a href="/news/"><span>+</span><strong>Compute Access Inequality</strong><em>2h ago</em></a>
+                    <a href="/news/"><span>+</span><strong>Model Governance Benchmark</strong><em>4h ago</em></a>
+                    <a href="/news/"><span>+</span><strong>AI &amp; Labor Market Impact</strong><em>6h ago</em></a>
+                {% endfor %}
             </div>
         </article>
 

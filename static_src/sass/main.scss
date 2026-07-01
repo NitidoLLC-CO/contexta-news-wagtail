@@ -1387,11 +1387,13 @@ a {
     margin-top: 14px;
 }
 
-.cx-store-badges span {
+.cx-store-badges span,
+.cx-store-badges a {
     border: 1px solid var(--cx-border);
     border-radius: 8px;
     padding: 8px 12px;
     background: #01040a;
+    color: var(--cx-text);
     font-family: var(--cx-font-mono);
     font-size: 0.68rem;
     text-transform: uppercase;

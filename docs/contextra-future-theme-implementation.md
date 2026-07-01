@@ -199,3 +199,34 @@ Remaining limitations:
 - Static intelligence widgets should become Wagtail snippets or API-backed modules later.
 - Fixed topic links may not match all Wagtail topic slugs until taxonomy is expanded.
 - Search, standard pages, forms, and streamfield utility blocks still need a dedicated cleanup pass.
+
+## Phase 2D Intelligence Admin Modules
+
+Phase 2D converts the accepted static intelligence widgets into Wagtail-admin-managed snippets while preserving the current public visual system and monolithic Railway deployment.
+
+New dynamic snippet-backed modules:
+
+- Global ticker: `LiveSignal`
+- Global status strip: `StatusMetric`
+- Homepage Live Signals: `LiveSignal`
+- Homepage AI Models Tracker: `AIModelTrackerItem`
+- Homepage Watchlist: `MarketWatchlistItem`
+- Homepage Trending Signals: `TrendingTopic`
+- Homepage Research Briefs: `ResearchBrief`
+- Homepage North Signal Brief: `NorthSignalBrief`
+- `/news/` Live Updates: `LiveSignal`
+- `/news/` section metrics: `StatusMetric`
+- `/news/` Trending Topics: `TrendingTopic`
+- `/news/` Research/Documents: `ResearchBrief`
+- `/news/` North Signal mini brief: `NorthSignalBrief`
+- Article Market Snapshot: `MarketWatchlistItem`
+- Article Related Signals: `LiveSignal`
+- Footer App/Ecosystem CTA: `AppEcosystemCTA`
+
+Static fallback branches remain in every connected template so the site does not go empty if snippet records are disabled or not seeded.
+
+Operational notes:
+
+- Migration: `contexta_news/intelligence/migrations/0001_initial.py`
+- Seed command: `python manage.py seed_contextra_intelligence`
+- Documentation: `docs/contextra-intelligence-admin-modules.md`

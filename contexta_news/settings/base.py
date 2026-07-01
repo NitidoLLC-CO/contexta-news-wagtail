@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "contexta_news.forms",
     "contexta_news.home",
     "contexta_news.images",
+    "contexta_news.intelligence",
     "contexta_news.navigation",
     "contexta_news.news",
     "contexta_news.search",
