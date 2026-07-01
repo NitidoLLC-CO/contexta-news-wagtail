@@ -1,47 +1,240 @@
 {% extends "base_page.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<section class="cx-listing-hero">
-    <div class="cx-container">
-        {% include "navigation/breadcrumbs.html" %}
-        <p class="cx-kicker">Newsroom Index</p>
-        <h1>{{ page.title }}</h1>
-        {% if page.introduction %}
-            <div class="cx-listing-hero__intro rich-text">{{ page.introduction|richtext }}</div>
-        {% endif %}
+<section class="cx-listing-hero cx-feed-hero" aria-label="CONTEXTRA intelligence feed">
+    <div class="cx-container cx-feed-hero__grid">
+        <div class="cx-feed-hero__content">
+            {% include "navigation/breadcrumbs.html" %}
+            <p class="cx-kicker">Section Hub</p>
+            <h1>{% firstof page.title "Intelligence Feed" %}</h1>
+            {% if page.introduction %}
+                <div class="cx-feed-hero__dek rich-text">{{ page.introduction|richtext }}</div>
+            {% elif page.search_description %}
+                <p class="cx-feed-hero__dek">{{ page.search_description }}</p>
+            {% else %}
+                <p class="cx-feed-hero__dek">Real-time AI, technology, policy, markets, companies, and research coverage from the CONTEXTRA intelligence desk.</p>
+            {% endif %}
+            {% if page.introduction or page.search_description %}
+                <p class="cx-feed-hero__support">Tracking AI, technology, policy, markets, companies, and research through a live intelligence feed.</p>
+            {% endif %}
 
-        {% if topics %}
-            <nav class="cx-topic-nav" aria-label="Article topics">
-                <a href="{% pageurl page %}" {% if not matching_topic %}aria-current="page"{% endif %}>All</a>
-                {% for topic in topics %}
-                    <a href="{% pageurl page %}?topic={{ topic.slug }}" {% if matching_topic == topic.slug %}aria-current="page"{% endif %}>{{ topic.title }}</a>
-                {% endfor %}
-            </nav>
+            <div class="cx-feed-metrics" aria-label="Section signal metrics">
+                <span><strong>1,248</strong> signals today</span>
+                <span><strong>98.7%</strong> systems monitoring</span>
+                <span><strong>Global</strong> coverage</span>
+            </div>
+        </div>
+
+        <div class="cx-feed-hero__visual" aria-hidden="true">
+            <div class="contextra-signal-visual">
+                <span class="contextra-data-grid"></span>
+                <span class="contextra-hologram-core"></span>
+                <span class="contextra-orbit-lines contextra-orbit-lines--one"></span>
+                <span class="contextra-orbit-lines contextra-orbit-lines--two"></span>
+                <span class="contextra-signal-stream contextra-signal-stream--one"></span>
+                <span class="contextra-signal-stream contextra-signal-stream--two"></span>
+                <span class="contextra-map-node contextra-map-node--one"></span>
+                <span class="contextra-map-node contextra-map-node--two"></span>
+                <span class="contextra-map-node contextra-map-node--three"></span>
+                <span class="contextra-micro-panel contextra-micro-panel--one">Feed online</span>
+                <span class="contextra-micro-panel contextra-micro-panel--two">Signal 94.6</span>
+                <span class="contextra-micro-panel contextra-micro-panel--three">Coverage active</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<nav class="cx-feed-topics" aria-label="Section topics">
+    <div class="cx-container cx-feed-topics__scroll">
+        <a href="{% pageurl page %}" {% if not matching_topic %}aria-current="page"{% endif %}>All</a>
+        <a href="{% pageurl page %}?topic=ai" {% if matching_topic == "ai" %}aria-current="page"{% endif %}>AI</a>
+        <a href="{% pageurl page %}?topic=technology" {% if matching_topic == "technology" %}aria-current="page"{% endif %}>Technology</a>
+        <a href="{% pageurl page %}?topic=companies" {% if matching_topic == "companies" %}aria-current="page"{% endif %}>Companies</a>
+        <a href="{% pageurl page %}?topic=policy" {% if matching_topic == "policy" %}aria-current="page"{% endif %}>Policy</a>
+        <a href="{% pageurl page %}?topic=markets" {% if matching_topic == "markets" %}aria-current="page"{% endif %}>Markets</a>
+        <a href="{% pageurl page %}?topic=research" {% if matching_topic == "research" %}aria-current="page"{% endif %}>Research</a>
+        <a href="{% pageurl page %}?topic=infrastructure" {% if matching_topic == "infrastructure" %}aria-current="page"{% endif %}>Infrastructure</a>
+        {% for topic in topics %}
+            <a href="{% pageurl page %}?topic={{ topic.slug }}" {% if matching_topic == topic.slug %}aria-current="page"{% endif %}>{{ topic.title }}</a>
+        {% endfor %}
+    </div>
+</nav>
+
+<section class="cx-feed-section" aria-label="Featured intelligence story">
+    <div class="cx-container">
+        {% if paginator_page.object_list %}
+            {% for subpage in paginator_page %}
+                {% if forloop.first %}
+                    {% with featured=subpage.specific %}
+                        <article class="cx-feed-featured">
+                            <div class="cx-feed-featured__body">
+                                <div class="cx-article-tags" aria-label="Featured story metadata">
+                                    {% if featured.topic %}<span>{{ featured.topic }}</span>{% endif %}
+                                    <span>Lead Signal</span>
+                                    {% if featured.display_date %}<span>{{ featured.display_date }}</span>{% endif %}
+                                </div>
+                                <h2><a href="{% pageurl featured %}">{% firstof featured.listing_title featured.title %}</a></h2>
+                                <p>{% firstof featured.listing_summary featured.plain_introduction featured.introduction featured.search_description %}</p>
+                                <div class="cx-meta-row">
+                                    {% if featured.author %}<span>{{ featured.author.title }}</span>{% else %}<span>CONTEXTRA Desk</span>{% endif %}
+                                    <span>4 min read</span>
+                                    <span>Signal strength 94.6</span>
+                                </div>
+                                <a class="cx-arrow-link" href="{% pageurl featured %}">Read Full Story</a>
+                            </div>
+
+                            <a class="cx-feed-featured__media" href="{% pageurl featured %}" aria-label="{{ featured.title }}">
+                                <div class="contextra-signal-visual" aria-hidden="true">
+                                    <span class="contextra-data-grid"></span>
+                                    <span class="contextra-hologram-core"></span>
+                                    <span class="contextra-orbit-lines contextra-orbit-lines--one"></span>
+                                    <span class="contextra-orbit-lines contextra-orbit-lines--two"></span>
+                                    <span class="contextra-signal-stream contextra-signal-stream--one"></span>
+                                    <span class="contextra-map-node contextra-map-node--one"></span>
+                                    <span class="contextra-map-node contextra-map-node--two"></span>
+                                    <span class="contextra-micro-panel contextra-micro-panel--one">Lead context</span>
+                                    <span class="contextra-micro-panel contextra-micro-panel--two">High confidence</span>
+                                </div>
+                                {% if featured.listing_image %}
+                                    {% image featured.listing_image format-webp fill-1000x680 as featured_image %}
+                                    <img src="{{ featured_image.url }}" width="{{ featured_image.width }}" height="{{ featured_image.height }}" alt="{{ featured_image.alt }}">
+                                {% endif %}
+                            </a>
+                        </article>
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="cx-empty-state">No published stories match this view yet.</div>
         {% endif %}
     </div>
 </section>
 
-<section class="cx-section">
-    <div class="cx-container">
-        {% if paginator_page %}
-            <div class="cx-card-grid cx-card-grid--listing">
-                {% for subpage in paginator_page %}
-                    {% include "components/card--article.html" with page=subpage.specific %}
-                {% endfor %}
+<section class="cx-feed-section cx-feed-main" aria-label="CONTEXTRA article feed">
+    <div class="cx-container cx-feed-main__grid">
+        <main class="cx-feed-main__stories">
+            <div class="cx-section-toolbar">
+                <div>
+                    <p class="cx-kicker">Intelligence Feed</p>
+                    <h2>High-signal developments</h2>
+                </div>
+            <span class="cx-feed-count">{% if paginator_page.object_list %}Page {{ paginator_page.number }} / {{ paginator_page.paginator.num_pages }}{% else %}No active feed{% endif %}</span>
             </div>
-            {% if paginator %}
-                {% include "components/pagination.html" with paginator_page=paginator_page %}
+
+            {% if paginator_page.object_list %}
+                <div class="cx-feed-grid">
+                    {% for subpage in paginator_page %}
+                        {% if not forloop.first %}
+                            {% if forloop.counter == 2 %}
+                                {% include "components/card--article.html" with page=subpage.specific variant="wide" %}
+                            {% elif forloop.counter == 5 or forloop.counter == 8 %}
+                                {% include "components/card--article.html" with page=subpage.specific variant="compact" %}
+                            {% else %}
+                                {% include "components/card--article.html" with page=subpage.specific %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% if paginator %}
+                    {% include "components/pagination.html" with paginator_page=paginator_page %}
+                {% endif %}
             {% endif %}
-        {% else %}
-            <p class="cx-empty-state">No published stories match this view yet.</p>
-        {% endif %}
+        </main>
+
+        <aside class="cx-feed-rail" aria-label="Section intelligence modules">
+            <section class="cx-side-card cx-score-card">
+                <p class="cx-kicker">Signal Score</p>
+                <strong>94.6</strong>
+                <span>Feed relevance high</span>
+            </section>
+
+            <section class="cx-side-card cx-feed-signal-list">
+                <p class="cx-kicker">Latest Signals</p>
+                {% if paginator_page.object_list %}
+                    {% for subpage in paginator_page %}
+                        {% if forloop.counter <= 4 %}
+                            {% with signal=subpage.specific %}
+                                <a href="{% pageurl signal %}">
+                                    <span>{% firstof signal.topic "Intelligence" %}</span>
+                                    <strong>{% firstof signal.listing_title signal.title %}</strong>
+                                </a>
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <a href="/news/"><span>AI Infrastructure</span><strong>Global compute pressure intensifies</strong></a>
+                {% endif %}
+            </section>
+
+            <section class="cx-side-card">
+                <p class="cx-kicker">Trending Topics</p>
+                <div class="cx-topic-pills">
+                    <span>Compute</span>
+                    <span>Policy</span>
+                    <span>Models</span>
+                    <span>Markets</span>
+                </div>
+            </section>
+
+            <section class="cx-side-card cx-market-snapshot">
+                <p class="cx-kicker">Market Snapshot</p>
+                <div><strong>NVDA</strong><span class="cx-positive">+3.4%</span></div>
+                <div><strong>MSFT</strong><span class="cx-positive">+1.1%</span></div>
+                <div><strong>AVGO</strong><span class="cx-negative">-0.8%</span></div>
+            </section>
+
+            <section class="cx-side-card cx-north-signal-mini">
+                <p class="cx-kicker">North Signal Brief</p>
+                <h3>Daily intelligence delivered</h3>
+                <p>The essential morning brief for AI, markets, policy, and power.</p>
+                <a class="cx-arrow-link" href="/news/">Preview brief</a>
+            </section>
+        </aside>
+    </div>
+</section>
+
+<section class="cx-feed-section cx-feed-lower" aria-label="Research and analysis modules">
+    <div class="cx-container cx-feed-lower__grid">
+        <article class="cx-data-panel cx-research">
+            <div class="cx-panel-heading">
+                <p>Research & Documents</p>
+                <span>Curated intelligence</span>
+            </div>
+            <div class="cx-brief-list">
+                <a href="/news/"><span>+</span><strong>Compute Access Inequality</strong><em>2h ago</em></a>
+                <a href="/news/"><span>+</span><strong>Model Robustness Benchmark</strong><em>4h ago</em></a>
+                <a href="/news/"><span>+</span><strong>AI & Labor Market Impact</strong><em>6h ago</em></a>
+            </div>
+        </article>
+
+        <article class="cx-data-panel cx-analysis">
+            <div class="cx-panel-heading">
+                <p>Analysis & Insights</p>
+                <span>Expert perspectives</span>
+            </div>
+            <div class="cx-analysis__visual" aria-hidden="true"></div>
+            <h3>Infrastructure, policy, and capital are converging into one strategic AI layer.</h3>
+            <a class="cx-arrow-link" href="/news/">View analysis</a>
+        </article>
+
+        <article class="cx-data-panel cx-signal-map">
+            <div class="cx-panel-heading">
+                <p>Global Signal Map</p>
+                <span>Live coverage</span>
+            </div>
+            <div class="cx-map-field" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </article>
     </div>
 </section>
 
 {% if page.body %}
-    <section class="cx-section">
-        {% include_block page.body %}
+    <section class="cx-section cx-feed-body">
+        <div class="cx-container">
+            {% include_block page.body %}
+        </div>
     </section>
 {% endif %}
 {% endblock %}

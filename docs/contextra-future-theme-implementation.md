@@ -117,3 +117,43 @@ Phase 2C recommendations:
 - Replace static article intelligence modules with Wagtail-managed fields/snippets.
 - Add real share/listen/save behavior if those become active product features.
 - Add curated related-signal logic beyond the existing related pages relation.
+
+## Phase 2C Section / Listing Pages
+
+Phase 2C rebuilds `/news/` and topic-filtered listing views into a CONTEXTRA Intelligence Feed section hub while preserving the existing Wagtail listing page model, article children, pagination, topic query links, and Railway deployment.
+
+Changed:
+
+- `templates/pages/news_listing_page.html`
+- `templates/components/card--article.html`
+- `static_src/sass/main.scss`
+- `static_compiled/css/main.css` after the production frontend build
+
+Dynamic listing mapping:
+
+- `page.title` renders as the section headline.
+- `page.introduction` or `page.search_description` renders as the section dek.
+- `topics` and `matching_topic` continue to support topic query links.
+- The first item in `paginator_page.object_list` renders as the featured lead story.
+- Remaining child `ArticlePage` items render into the main feed grid.
+- Article cards use Wagtail title/listing title, listing summary/introduction, topic, date, author, and listing image.
+- Existing pagination remains active through `components/pagination.html`.
+
+Static Phase 2C fallback modules:
+
+- Section signal metrics.
+- Required visual topic chips for All, AI, Technology, Companies, Policy, Markets, Research, and Infrastructure.
+- Signal Score, Trending Topics, Market Snapshot, North Signal Brief, Research & Documents, Analysis & Insights, and Global Signal Map.
+- These are isolated in `templates/pages/news_listing_page.html` for later conversion to snippets, editorial fields, or API-backed modules.
+
+Responsive section behavior:
+
+- Desktop uses a section hero, featured story, dynamic article feed, sticky intelligence rail, and lower intelligence modules.
+- Tablet stacks the hero visual and featured media while preserving a structured feed.
+- Mobile hides the decorative section visual, keeps the title and featured story early, scrolls topic chips horizontally, stacks feed cards and right rail modules, and avoids oversized empty panels.
+
+Phase 2D recommendations:
+
+- Convert static section modules into Wagtail snippets or API-backed widgets.
+- Add real backend filtering for the fixed topic chips where matching Wagtail topics do not yet exist.
+- Revisit search results and other utility pages so the full public site shares the same future-newsroom language.

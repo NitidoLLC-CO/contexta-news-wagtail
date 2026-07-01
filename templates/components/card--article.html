@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<article class="cx-card cx-story-card {% if variant == 'compact' %}cx-card--compact{% endif %}">
+<article class="cx-card cx-story-card {% if variant == 'compact' %}cx-card--compact{% elif variant == 'wide' %}cx-card--wide{% endif %}">
     <a class="cx-card__media" href="{% pageurl page %}" aria-label="{{ page.title }}">
         {% if page.listing_image %}
             {% image page.listing_image format-webp fill-900x600 as card_image %}
