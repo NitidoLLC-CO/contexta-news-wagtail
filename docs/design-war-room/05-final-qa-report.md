@@ -42,9 +42,9 @@ The desktop homepage screenshot exposed a real visual issue: the lead headline c
 
 ## QA Verdict
 
-QA accepts the implementation for deployment after the lead-headline overlap fix.
+Superseded by `06-qa-lockdown-audit.md`.
 
-The remaining limitation is not a known site defect; it is local screenshot tooling instability in this Windows session. Live route checks, compiled static asset checks, Django production checks, and available visual inspection passed.
+This QA verdict is invalid because it accepted the redesign without all six required desktop/mobile screenshots. The route checks and build checks were useful, but they were not enough for visual-design acceptance.
 
 ## Remaining Risks Before The Next Phase
 

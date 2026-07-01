@@ -23,12 +23,12 @@
         </nav>
 
         <a class="cx-search-pill" href="{% url 'search' %}" aria-label="Search intelligence, topics, entities">
-            <span aria-hidden="true">⌕</span>
+            <span aria-hidden="true">Q</span>
             <span>Search intelligence, topics, entities...</span>
         </a>
 
         <div class="cx-shell__actions" aria-label="Utility actions">
-            <a href="/news/" aria-label="Signal settings">✦</a>
+            <a href="/news/" aria-label="Signal settings">NS</a>
             <details class="cx-mobile-nav">
                 <summary aria-label="Open navigation menu">
                     <span></span>
@@ -70,14 +70,14 @@
             <div><span>Global Coverage</span><strong>87 Countries</strong></div>
         </div>
     </div>
-
-    <nav class="cx-mobile-bottom-nav" aria-label="Mobile quick navigation">
-        <a href="/" aria-label="Home"><span>⌂</span><strong>Home</strong></a>
-        <a href="/news/" aria-label="Sections"><span>☷</span><strong>Sections</strong></a>
-        <a class="cx-mobile-bottom-nav__mark" href="/" aria-label="CONTEXTRA home">
-            <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
-        </a>
-        <a href="/news/?topic=markets" aria-label="Watchlist"><span>▤</span><strong>Watchlist</strong></a>
-        <a href="{% url 'search' %}" aria-label="Search"><span>⌕</span><strong>Search</strong></a>
-    </nav>
 </header>
+
+<nav class="cx-mobile-bottom-nav" aria-label="Mobile quick navigation">
+    <a href="/" aria-label="Home"><span>H</span><strong>Home</strong></a>
+    <a href="/news/" aria-label="Sections"><span>N</span><strong>Sections</strong></a>
+    <a class="cx-mobile-bottom-nav__mark" href="/" aria-label="CONTEXTRA home">
+        <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
+    </a>
+    <a href="/news/?topic=markets" aria-label="Watchlist"><span>W</span><strong>Watchlist</strong></a>
+    <a href="{% url 'search' %}" aria-label="Search"><span>Q</span><strong>Search</strong></a>
+</nav>
