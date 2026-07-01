@@ -1,11 +1,11 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags static %}
 {% wagtail_site as current_site %}
 
 <header class="cx-shell" aria-label="CONTEXTRA global header">
     <div class="cx-shell__bar cx-container">
         <a class="cx-brand" href="/" aria-label="CONTEXTRA home">
-            <span class="cx-brand__mark" aria-hidden="true">
-                <span></span>
+            <span class="cx-brand__mark cx-brand__mark--asset" aria-hidden="true">
+                <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
             </span>
             <span class="cx-brand__text">
                 <strong>CONTEXTRA</strong>
@@ -70,4 +70,14 @@
             <div><span>Global Coverage</span><strong>87 Countries</strong></div>
         </div>
     </div>
+
+    <nav class="cx-mobile-bottom-nav" aria-label="Mobile quick navigation">
+        <a href="/" aria-label="Home"><span>⌂</span><strong>Home</strong></a>
+        <a href="/news/" aria-label="Sections"><span>☷</span><strong>Sections</strong></a>
+        <a class="cx-mobile-bottom-nav__mark" href="/" aria-label="CONTEXTRA home">
+            <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
+        </a>
+        <a href="/news/?topic=markets" aria-label="Watchlist"><span>▤</span><strong>Watchlist</strong></a>
+        <a href="{% url 'search' %}" aria-label="Search"><span>⌕</span><strong>Search</strong></a>
+    </nav>
 </header>

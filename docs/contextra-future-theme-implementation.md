@@ -157,3 +157,45 @@ Phase 2D recommendations:
 - Convert static section modules into Wagtail snippets or API-backed widgets.
 - Add real backend filtering for the fixed topic chips where matching Wagtail topics do not yet exist.
 - Revisit search results and other utility pages so the full public site shares the same future-newsroom language.
+
+## Design War Room Rebuild
+
+The rejected Phase 2C was replaced with a supervised design war-room sprint focused on closing the gap with the approved reference images in `contexctra branding/`.
+
+Changed direction:
+
+- Replaced incremental listing-page polish with a broader public frontend rebuild.
+- Added design war-room audit/planning documents under `docs/design-war-room/`.
+- Added optimized web-ready North Signal brand assets derived from the approved branding images.
+- Reworked global header/footer/mobile shell to use the real brand asset instead of only the CSS-drawn mark.
+- Added safe-area-aware mobile bottom navigation.
+- Strengthened homepage first fold with lead metrics and real brand watermark.
+- Rebuilt `/news/` into a section command center with section hero, metrics, filters, live updates, featured story, signal score, trackers, video brief, research/documents, analysis, expert/event modules, and dynamic feed rhythm.
+- Refined article page with brand watermark, share/print affordances, and market snapshot rail while preserving Wagtail body rendering.
+- Upgraded shared article cards with branded fallback media and richer variants.
+
+Dynamic Wagtail content remains:
+
+- homepage lead story, latest signals, and top stories
+- listing featured story and paginated article feed
+- article title, dek, body, topic, author, date, image, and related pages
+
+Static fallback modules remain:
+
+- ticker/status metrics
+- model tracker
+- watchlist
+- signal map
+- trending signals/topics
+- trackers
+- video brief
+- market snapshot
+- research/document rows
+- North Signal Brief
+- app CTA
+
+Remaining limitations:
+
+- Static intelligence widgets should become Wagtail snippets or API-backed modules later.
+- Fixed topic links may not match all Wagtail topic slugs until taxonomy is expanded.
+- Search, standard pages, forms, and streamfield utility blocks still need a dedicated cleanup pass.

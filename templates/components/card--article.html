@@ -1,28 +1,32 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
-<article class="cx-card cx-story-card {% if variant == 'compact' %}cx-card--compact{% elif variant == 'wide' %}cx-card--wide{% endif %}">
+<article class="cx-card cx-story-card {% if variant == 'compact' %}cx-card--compact{% elif variant == 'wide' %}cx-card--wide{% elif variant == 'feature' %}cx-card--feature{% elif variant == 'signal' %}cx-card--signal{% endif %}">
     <a class="cx-card__media" href="{% pageurl page %}" aria-label="{{ page.title }}">
         {% if page.listing_image %}
             {% image page.listing_image format-webp fill-900x600 as card_image %}
             <img src="{{ card_image.url }}" width="{{ card_image.width }}" height="{{ card_image.height }}" alt="{{ card_image.alt }}">
         {% else %}
-            <span class="cx-card__placeholder">CONTEXTRA</span>
+            <span class="cx-card__placeholder cx-card__placeholder--asset">
+                <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
+                <i></i>
+                <b>Signal linked</b>
+            </span>
         {% endif %}
     </a>
     <div class="cx-card__body">
         <div class="cx-card__meta">
-            {% if page.topic %}<span>{{ page.topic }}</span>{% endif %}
+            {% if page.topic %}<span>{{ page.topic }}</span>{% else %}<span>Intelligence</span>{% endif %}
             {% if page.display_date %}<span>{{ page.display_date }}</span>{% endif %}
         </div>
         <h3><a href="{% pageurl page %}">{% firstof page.listing_title page.title %}</a></h3>
-        <p>{% firstof page.listing_summary page.plain_introduction page.introduction %}</p>
+        <p>{% firstof page.listing_summary page.plain_introduction page.introduction page.search_description %}</p>
         <div class="cx-card__footer">
             {% if page.author %}
                 <span>{{ page.author.title }}</span>
             {% else %}
                 <span>CONTEXTRA Desk</span>
             {% endif %}
-            <i aria-hidden="true">→</i>
+            <i aria-hidden="true">-&gt;</i>
         </div>
     </div>
 </article>

@@ -1,5 +1,5 @@
 {% extends "base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 <article class="cx-article cx-intel-article">
@@ -32,14 +32,15 @@
 
                 <div class="cx-article-actions" aria-label="Article actions">
                     <a href="#article-body">Listen</a>
-                    <a href="#article-body">Share</a>
+                    <a href="mailto:?subject={{ page.title|urlencode }}">Share</a>
                     <a href="#article-body">Save</a>
                     <a href="#article-body">Cite</a>
-                    <a href="#article-body">Print</a>
+                    <a href="#" onclick="window.print(); return false;">Print</a>
                 </div>
             </div>
 
             <figure class="cx-article-visual">
+                <img class="cx-article-visual__brand" src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
                 <div class="contextra-signal-visual" aria-hidden="true">
                     <span class="contextra-data-grid"></span>
                     <span class="contextra-hologram-core"></span>
@@ -135,6 +136,15 @@
                 <p class="cx-kicker">Article Intelligence</p>
                 <strong>91.8</strong>
                 <span>High signal relevance</span>
+            </section>
+
+            <section class="cx-side-card">
+                <p class="cx-kicker">Market Snapshot</p>
+                <div class="cx-market-snapshot">
+                    <div><strong>NVDA</strong><span class="cx-positive">+3.4%</span></div>
+                    <div><strong>MSFT</strong><span class="cx-positive">+1.1%</span></div>
+                    <div><strong>AVGO</strong><span class="cx-negative">-0.8%</span></div>
+                </div>
             </section>
 
             <section class="cx-side-card">

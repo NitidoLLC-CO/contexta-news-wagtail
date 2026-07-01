@@ -1,25 +1,25 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags static %}
 {% wagtail_site as current_site %}
 
 <section class="cx-ecosystem-strip" aria-label="CONTEXTRA platform strengths">
     <div class="cx-container cx-ecosystem-strip__grid">
         <article>
-            <span>◉</span>
+            <span>01</span>
             <strong>Real-time signals</strong>
             <p>Instant alerts on critical developments.</p>
         </article>
         <article>
-            <span>◇</span>
+            <span>02</span>
             <strong>Deep intelligence</strong>
             <p>Expert analysis and proprietary research.</p>
         </article>
         <article>
-            <span>◎</span>
+            <span>03</span>
             <strong>Global perspective</strong>
             <p>Coverage across 87 countries.</p>
         </article>
         <article>
-            <span>⬡</span>
+            <span>04</span>
             <strong>Secure & private</strong>
             <p>Professional-grade intelligence platform.</p>
         </article>
@@ -41,14 +41,18 @@
             <p>Access real-time signals, expert analysis, and personalized intelligence on the go.</p>
         </div>
         <a class="cx-arrow-link cx-app-cta__button" href="/news/">Explore the app</a>
-        <div class="cx-phone-ghost" aria-hidden="true"></div>
+        <div class="cx-phone-ghost cx-phone-ghost--asset" aria-hidden="true">
+            <img src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
+        </div>
     </div>
 </section>
 
 <footer class="cx-footer">
     <div class="cx-container cx-footer__grid">
         <div class="cx-footer__brand">
-            <span class="cx-brand__mark" aria-hidden="true"><span></span></span>
+            <span class="cx-brand__mark cx-brand__mark--asset" aria-hidden="true">
+                <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
+            </span>
             <div>
                 <strong>CONTEXTRA</strong>
                 <em>Intelligence News</em>
@@ -73,6 +77,6 @@
     </div>
     <div class="cx-container cx-footer__bottom">
         <span>&copy; {% now "Y" %} {{ current_site.site_name|default:"CONTEXTRA News" }}. All rights reserved.</span>
-        <span>Powered by NÍTIDO®</span>
+        <span>Powered by NITIDO</span>
     </div>
 </footer>

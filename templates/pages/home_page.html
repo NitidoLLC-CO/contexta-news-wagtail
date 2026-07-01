@@ -1,5 +1,5 @@
 {% extends "base_page.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 <section class="cx-home-hero" aria-label="Lead intelligence story">
@@ -12,7 +12,7 @@
             <span>05</span>
         </div>
 
-        <article class="cx-lead-system">
+        <article class="cx-lead-system cx-lead-system--war-room">
             <div class="cx-lead-system__content">
                 {% if lead_article %}
                     <p class="cx-kicker">{{ lead_article.topic }}</p>
@@ -25,6 +25,11 @@
                         <span>{{ lead_article.author.title }}</span>
                         <span>Signal strength 92.4</span>
                     </div>
+                    <div class="cx-lead-metrics" aria-label="Lead story intelligence metrics">
+                        <span><strong>92.4</strong>Signal strength</span>
+                        <span><strong>High</strong>Confidence</span>
+                        <span><strong>Live</strong>Global scan</span>
+                    </div>
                     <a class="cx-arrow-link" href="{% pageurl lead_article %}">Read Full Story</a>
                 {% else %}
                     <p class="cx-kicker">Deployment Test</p>
@@ -36,6 +41,11 @@
                         <span>Live desk</span>
                         <span>CONTEXTRA Editorial</span>
                         <span>Signal strength 92.4</span>
+                    </div>
+                    <div class="cx-lead-metrics" aria-label="Lead story intelligence metrics">
+                        <span><strong>92.4</strong>Signal strength</span>
+                        <span><strong>High</strong>Confidence</span>
+                        <span><strong>Live</strong>Global scan</span>
                     </div>
                     <a class="cx-arrow-link" href="/news/">Read Full Story</a>
                 {% endif %}
@@ -56,6 +66,7 @@
                     <span class="contextra-micro-panel contextra-micro-panel--two">Confidence High</span>
                     <span class="contextra-micro-panel contextra-micro-panel--three">Global Scan Active</span>
                 </div>
+                <img class="cx-lead-system__brand-watermark" src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
                 {% if lead_article and lead_article.listing_image %}
                     {% image lead_article.listing_image format-webp fill-1000x680 as lead_image %}
                     <img src="{{ lead_image.url }}" width="{{ lead_image.width }}" height="{{ lead_image.height }}" alt="{{ lead_image.alt }}">
@@ -105,7 +116,13 @@
 
         <div class="cx-story-grid">
             {% for article in top_stories %}
-                {% include "components/card--article.html" with page=article %}
+                {% if forloop.first %}
+                    {% include "components/card--article.html" with page=article variant="feature" %}
+                {% elif forloop.counter == 4 %}
+                    {% include "components/card--article.html" with page=article variant="compact" %}
+                {% else %}
+                    {% include "components/card--article.html" with page=article %}
+                {% endif %}
             {% empty %}
                 {% include "components/card.html" with page=page %}
             {% endfor %}
