@@ -230,3 +230,49 @@ Operational notes:
 - Migration: `contexta_news/intelligence/migrations/0001_initial.py`
 - Seed command: `python manage.py seed_contextra_intelligence`
 - Documentation: `docs/contextra-intelligence-admin-modules.md`
+
+## Phase 2E Article Intelligence Workflow
+
+Phase 2E makes the article detail page editable as a real intelligence briefing without changing the accepted article visual design.
+
+Added to `ArticlePage`:
+
+- impact level
+- signal score
+- confidence level
+- source confidence
+- time sensitivity
+- article context label
+- intelligence note
+- pull quote fields
+- inline impact model fields
+
+Added ordered article child rows:
+
+- key takeaways
+- signal tags
+- related LiveSignal links with manual fallback fields
+
+Article modules now dynamic:
+
+- hero signal tags
+- article context label
+- signal score micro-panel
+- trustbar confidence/source confidence
+- key takeaways
+- related topic chips
+- intelligence note
+- pull quote
+- inline Signal Intelligence card
+- Article Intelligence score card
+- Briefing Status side card
+- related signals
+- tag side card
+
+Fallback branches remain in the article template so old articles still render with the accepted static briefing copy.
+
+Operational notes:
+
+- Migration: `contexta_news/news/migrations/0002_articlepage_article_context_label_and_more.py`
+- Seed command: `python manage.py seed_article_intelligence`
+- Documentation: `docs/contextra-article-intelligence-workflow.md`

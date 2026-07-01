@@ -12,9 +12,13 @@
 
                 <div class="cx-article-tags" aria-label="Article signal tags">
                     <span>{{ page.topic }}</span>
-                    <span>High impact</span>
-                    <span>AI infrastructure</span>
-                    <span>Market signal</span>
+                    {% for tag in page.signal_tags.all %}
+                        <span>{{ tag.label }}</span>
+                    {% empty %}
+                        <span>{{ page.impact_display }} impact</span>
+                        <span>{% firstof page.article_context_label "AI infrastructure" %}</span>
+                        <span>Market signal</span>
+                    {% endfor %}
                 </div>
 
                 <h1>{{ page.title }}</h1>
@@ -29,7 +33,7 @@
                     <span>{{ page.display_date }}</span>
                     <span>{{ page.author.title }}</span>
                     <span>4 min read</span>
-                    <span>CONTEXTRA Intelligence Desk</span>
+                    <span>{% firstof page.article_context_label "CONTEXTRA Intelligence Desk" %}</span>
                 </div>
 
                 <div class="cx-article-actions" aria-label="Article actions">
@@ -54,7 +58,7 @@
                     <span class="contextra-map-node contextra-map-node--two"></span>
                     <span class="contextra-map-node contextra-map-node--three"></span>
                     <span class="contextra-micro-panel contextra-micro-panel--one">Context linked</span>
-                    <span class="contextra-micro-panel contextra-micro-panel--two">Signal 91.8</span>
+                    <span class="contextra-micro-panel contextra-micro-panel--two">Signal {% firstof page.signal_score "91.8" %}</span>
                 </div>
                 {% if page.image %}
                     {% image page.image.0.value.image format-webp width-1400 as hero_image %}
@@ -83,18 +87,26 @@
             <div class="cx-context-block">
                 <strong>Key Takeaways</strong>
                 <ul>
-                    <li>Infrastructure pressure is becoming a strategic variable.</li>
-                    <li>Policy, compute, and capital are converging quickly.</li>
-                    <li>Market response depends on supply reliability.</li>
+                    {% for takeaway in page.key_takeaways.all %}
+                        <li>{% if takeaway.label %}<strong>{{ takeaway.label }}:</strong> {% endif %}{{ takeaway.text }}</li>
+                    {% empty %}
+                        <li>Infrastructure pressure is becoming a strategic variable.</li>
+                        <li>Policy, compute, and capital are converging quickly.</li>
+                        <li>Market response depends on supply reliability.</li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="cx-context-block">
                 <strong>Related Topics</strong>
                 <div class="cx-topic-pills">
                     <span>{{ page.topic }}</span>
-                    <span>AI Policy</span>
-                    <span>Compute</span>
-                    <span>Markets</span>
+                    {% for tag in page.signal_tags.all %}
+                        <span>{{ tag.label }}</span>
+                    {% empty %}
+                        <span>AI Policy</span>
+                        <span>Compute</span>
+                        <span>Markets</span>
+                    {% endfor %}
                 </div>
             </div>
         </aside>
@@ -102,13 +114,13 @@
         <main class="cx-article-body-panel" id="article-body">
             <div class="cx-article-trustbar">
                 <span>Professional intelligence brief</span>
-                <span>Editorial review active</span>
-                <span>Source confidence: high</span>
+                <span>Confidence: {{ page.confidence_display }}</span>
+                <span>Source confidence: {{ page.source_confidence_display }}</span>
             </div>
 
             <section class="cx-article-note">
                 <p class="cx-kicker">Intelligence Note</p>
-                <p>This briefing is structured for rapid context, decision support, and deeper editorial reading.</p>
+                <p>{% firstof page.intelligence_note "This briefing is structured for rapid context, decision support, and deeper editorial reading." %}</p>
             </section>
 
             <div class="cx-article-body rich-text">
@@ -116,28 +128,31 @@
             </div>
 
             <blockquote class="cx-pull-quote">
-                <p>The signal is not one event. It is the convergence of infrastructure, policy, capital, and deployment speed.</p>
-                <cite>CONTEXTRA Intelligence Desk</cite>
+                <p>{% firstof page.pull_quote "The signal is not one event. It is the convergence of infrastructure, policy, capital, and deployment speed." %}</p>
+                <cite>{% firstof page.pull_quote_attribution "CONTEXTRA Intelligence Desk" %}{% if page.pull_quote_source_label %} &middot; {{ page.pull_quote_source_label }}{% endif %}</cite>
             </blockquote>
 
             <section class="cx-inline-intel-card">
                 <div>
                     <p class="cx-kicker">Signal Intelligence</p>
-                    <h2>Impact model</h2>
+                    <h2>{% firstof page.impact_model_title "Impact model" %}</h2>
                 </div>
                 <dl>
-                    <div><dt>Signal strength</dt><dd>91.8</dd></div>
-                    <div><dt>Confidence</dt><dd>High</dd></div>
-                    <div><dt>Time horizon</dt><dd>30-90 days</dd></div>
+                    <div><dt>{% firstof page.impact_model_metric_label "Signal strength" %}</dt><dd>{% firstof page.impact_model_metric_value page.signal_score "91.8" %}</dd></div>
+                    <div><dt>Confidence</dt><dd>{{ page.confidence_display }}</dd></div>
+                    <div><dt>{% if page.impact_model_secondary_metric %}Secondary metric{% else %}Time horizon{% endif %}</dt><dd>{% firstof page.impact_model_secondary_metric page.time_sensitivity_display %}</dd></div>
                 </dl>
+                {% if page.impact_model_notes or page.impact_model_source %}
+                    <p>{% firstof page.impact_model_notes page.impact_model_source %}</p>
+                {% endif %}
             </section>
         </main>
 
         <aside class="cx-article-side-panel" aria-label="Article intelligence">
             <section class="cx-side-card cx-score-card">
                 <p class="cx-kicker">Article Intelligence</p>
-                <strong>91.8</strong>
-                <span>High signal relevance</span>
+                <strong>{% firstof page.signal_score "91.8" %}</strong>
+                <span>{{ page.impact_display }} signal relevance</span>
             </section>
 
             <section class="cx-side-card">
@@ -155,13 +170,26 @@
 
             <section class="cx-side-card">
                 <p class="cx-kicker">Related Signals</p>
-                {% for signal in article_related_signals %}
-                    <a href="{{ signal.link_url }}">{{ signal.title }}</a>
+                {% for related_signal in page.intelligence_related_signals.all %}
+                    {% if related_signal.title %}
+                        <a href="{{ related_signal.link_url }}">{{ related_signal.title }}</a>
+                    {% endif %}
                 {% empty %}
-                    <a href="/news/">Compute sovereignty</a>
-                    <a href="/news/">AI infrastructure spend</a>
-                    <a href="/news/">Policy acceleration</a>
+                    {% for signal in article_related_signals %}
+                        <a href="{{ signal.link_url }}">{{ signal.title }}</a>
+                    {% empty %}
+                        <a href="/news/">Compute sovereignty</a>
+                        <a href="/news/">AI infrastructure spend</a>
+                        <a href="/news/">Policy acceleration</a>
+                    {% endfor %}
                 {% endfor %}
+            </section>
+
+            <section class="cx-side-card">
+                <p class="cx-kicker">Briefing Status</p>
+                <a href="#article-body">Impact: {{ page.impact_display }}</a>
+                <a href="#article-body">Time sensitivity: {{ page.time_sensitivity_display }}</a>
+                <a href="#article-body">Source confidence: {{ page.source_confidence_display }}</a>
             </section>
 
             <section class="cx-side-card">
@@ -174,8 +202,12 @@
                 <p class="cx-kicker">Tags</p>
                 <div class="cx-topic-pills">
                     <span>{{ page.topic }}</span>
-                    <span>High Impact</span>
-                    <span>Markets</span>
+                    {% for tag in page.signal_tags.all %}
+                        <span>{{ tag.label }}</span>
+                    {% empty %}
+                        <span>High Impact</span>
+                        <span>Markets</span>
+                    {% endfor %}
                 </div>
             </section>
         </aside>
