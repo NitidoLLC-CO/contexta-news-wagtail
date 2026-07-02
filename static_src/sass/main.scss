@@ -5060,7 +5060,98 @@ a {
 @media (min-width: 1024px) {
     .cx-home-board__frame {
         grid-template-columns: 38px minmax(0, 1fr) minmax(250px, 0.31fr) minmax(250px, 0.31fr);
-        grid-template-rows: auto auto 216px;
+        grid-template-areas:
+            "index lead lead live"
+            "stories stories models watch";
+        grid-template-rows: 358px 216px;
+    }
+
+    .cx-home-board .cx-command-banner {
+        display: none;
+    }
+
+    .cx-lead-system--reference,
+    .cx-live-panel--reference {
+        height: 358px;
+        max-height: 358px;
+    }
+
+    .cx-lead-system--reference {
+        min-height: 0;
+        grid-template-columns: minmax(320px, 0.7fr) minmax(520px, 1.3fr);
+    }
+
+    .cx-lead-system--reference .cx-lead-system__content {
+        gap: 10px;
+        padding: 30px 34px;
+    }
+
+    .cx-lead-system--reference h1 {
+        max-width: 520px;
+        font-size: clamp(2rem, 3vw, 3.05rem);
+        line-height: 1.02;
+    }
+
+    .cx-lead-system--reference .cx-lead-system__summary {
+        max-width: 520px;
+        font-size: 0.9rem;
+        line-height: 1.45;
+    }
+
+    .cx-lead-system--reference .cx-meta-row span {
+        padding: 6px 9px;
+        font-size: 0.58rem;
+    }
+
+    .cx-lead-system--reference .cx-lead-metrics {
+        max-width: 460px;
+        gap: 7px;
+    }
+
+    .cx-lead-system--reference .cx-lead-metrics span {
+        padding: 8px 10px;
+        font-size: 0.56rem;
+    }
+
+    .cx-lead-system--reference .cx-lead-metrics strong {
+        font-size: 0.86rem;
+    }
+
+    .cx-lead-system--reference .cx-arrow-link {
+        width: max-content;
+        padding: 8px 12px;
+        font-size: 0.6rem;
+    }
+
+    .cx-lead-system--reference .cx-lead-system__visual,
+    .cx-lead-system--reference .cx-lead-system__visual img {
+        min-height: 0;
+        height: 358px;
+    }
+
+    .cx-live-panel--reference {
+        overflow: hidden;
+        padding: 12px;
+    }
+
+    .cx-live-panel--reference .cx-live-panel__list a {
+        gap: 5px;
+        padding-top: 9px;
+    }
+
+    .cx-live-panel--reference .cx-live-panel__list a:nth-child(n + 4) {
+        display: none;
+    }
+
+    .cx-live-panel--reference strong {
+        font-size: 0.78rem;
+        line-height: 1.16;
+    }
+
+    .cx-live-panel--reference span,
+    .cx-live-panel--reference small,
+    .cx-live-panel--reference em {
+        font-size: 0.52rem;
     }
 
     .cx-reference-top-stories,
