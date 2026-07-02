@@ -5193,3 +5193,286 @@ a {
         max-height: none;
     }
 }
+
+/* Phase 2I.5: compress bottom ecosystem to reference height */
+@media (min-width: 1024px) {
+    .cx-reference-lower-grid {
+        padding: 8px 0;
+    }
+
+    .cx-reference-lower-grid .cx-data-panel {
+        height: 160px;
+        min-height: 160px;
+        gap: 6px;
+        padding: 9px;
+    }
+
+    .cx-reference-lower-grid .cx-map-field {
+        min-height: 78px;
+    }
+
+    .cx-reference-lower-grid .cx-analysis__visual {
+        min-height: 42px;
+        margin-bottom: 2px;
+    }
+
+    .cx-reference-lower-grid .cx-trending li,
+    .cx-reference-lower-grid .cx-brief-list a {
+        min-height: 20px;
+        padding-top: 4px;
+        font-size: 0.58rem;
+    }
+
+    .cx-reference-lower-grid .cx-brief-form {
+        min-height: 30px;
+        margin: 4px 0;
+    }
+
+    .cx-reference-lower-grid .cx-brief-form input {
+        padding: 6px 10px;
+    }
+
+    .cx-reference-lower-grid .cx-brief-form button {
+        padding: 7px 10px;
+    }
+
+    .cx-ecosystem-strip--parity {
+        padding: 6px 0;
+    }
+
+    .cx-ecosystem-strip__grid {
+        min-height: 62px;
+    }
+
+    .cx-ecosystem-strip article {
+        min-height: 62px;
+        padding: 8px 14px;
+        gap: 3px 10px;
+    }
+
+    .cx-ecosystem-strip span {
+        width: 30px;
+        height: 30px;
+        font-size: 0.62rem;
+    }
+
+    .cx-ecosystem-strip strong {
+        font-size: 0.66rem;
+    }
+
+    .cx-ecosystem-strip p {
+        font-size: 0.7rem;
+        line-height: 1.25;
+    }
+
+    .cx-app-cta {
+        padding: 6px 0 8px;
+    }
+
+    .cx-app-cta--parity .cx-app-cta__panel {
+        min-height: 96px;
+        padding: 12px 18px;
+        grid-template-columns: 0.82fr 1fr auto;
+        gap: 18px;
+    }
+
+    .cx-app-cta__panel h2 {
+        margin: 2px 0 6px;
+        font-size: 0.82rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .cx-app-cta__copy h3 {
+        margin: 0 0 5px;
+        font-size: 1.1rem;
+    }
+
+    .cx-app-cta__copy p {
+        font-size: 0.72rem;
+        line-height: 1.35;
+    }
+
+    .cx-store-badges {
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .cx-store-badges span,
+    .cx-store-badges a {
+        padding: 6px 9px;
+        font-size: 0.56rem;
+    }
+
+    .cx-phone-ghost {
+        left: 28%;
+        bottom: -34px;
+        width: 64px;
+        height: 104px;
+        border-radius: 14px;
+    }
+
+    .cx-app-cta__button {
+        padding: 10px 16px;
+        font-size: 0.62rem;
+    }
+
+    .cx-footer {
+        padding: 10px 0 10px;
+    }
+
+    .cx-footer__grid {
+        grid-template-columns: minmax(220px, 0.8fr) minmax(0, auto) minmax(0, auto);
+        gap: 28px;
+        align-items: center;
+    }
+
+    .cx-footer__brand {
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 10px;
+        max-width: 320px;
+        align-items: center;
+    }
+
+    .cx-footer__brand .cx-brand__mark {
+        width: 34px;
+        height: 34px;
+    }
+
+    .cx-footer__brand p {
+        display: none;
+    }
+
+    .cx-footer__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.58rem;
+    }
+
+    .cx-footer__bottom {
+        min-height: 24px;
+        margin-top: 8px;
+        padding-top: 8px;
+        font-size: 0.56rem;
+    }
+}
+
+/* Phase 2I.6: desktop sheet-width parity */
+@media (min-width: 1024px) {
+    :root {
+        --cx-container: 1920px;
+    }
+
+    .cx-container,
+    .site-container {
+        width: min(100% - 16px, var(--cx-container));
+    }
+
+    .site-padding {
+        padding-inline: max(8px, calc((100vw - var(--cx-container)) / 2));
+    }
+
+    .cx-shell__bar,
+    .cx-live-ticker__track,
+    .cx-status-strip__grid,
+    .cx-home-board__frame,
+    .cx-reference-lower-grid__layout,
+    .cx-ecosystem-strip__grid,
+    .cx-app-cta__panel,
+    .cx-footer__grid,
+    .cx-footer__bottom {
+        width: min(100% - 16px, var(--cx-container));
+    }
+
+    .cx-home-board {
+        padding: 10px 0 8px;
+    }
+
+    .cx-home-board__frame {
+        grid-template-columns: 34px minmax(0, 1.55fr) minmax(240px, 0.42fr) minmax(240px, 0.42fr);
+        grid-template-rows: 352px 208px;
+        gap: 8px;
+    }
+
+    .cx-lead-system--reference,
+    .cx-live-panel--reference {
+        height: 352px;
+        max-height: 352px;
+    }
+
+    .cx-lead-system--reference {
+        grid-template-columns: minmax(320px, 0.66fr) minmax(560px, 1.34fr);
+    }
+
+    .cx-lead-system--reference .cx-lead-system__content {
+        padding: 24px 28px;
+    }
+
+    .cx-lead-system--reference .cx-lead-system__visual,
+    .cx-lead-system--reference .cx-lead-system__visual img {
+        height: 352px;
+    }
+
+    .cx-reference-top-stories,
+    .cx-reference-models,
+    .cx-reference-watchlist {
+        height: 208px;
+        max-height: 208px;
+    }
+
+    .cx-reference-top-stories {
+        padding: 9px;
+    }
+
+    .cx-story-grid--reference {
+        gap: 8px;
+    }
+
+    .cx-static-story {
+        min-height: 150px;
+    }
+
+    .cx-reference-models,
+    .cx-reference-watchlist {
+        padding: 10px;
+    }
+
+    .cx-reference-lower-grid {
+        padding: 8px 0 6px;
+    }
+
+    .cx-reference-lower-grid__layout {
+        grid-template-columns: minmax(300px, 1.08fr) minmax(210px, 0.7fr) minmax(280px, 0.9fr) minmax(245px, 0.78fr) minmax(270px, 0.86fr);
+        gap: 8px;
+    }
+
+    .cx-reference-lower-grid .cx-data-panel {
+        height: 154px;
+        min-height: 154px;
+    }
+
+    .cx-reference-lower-grid .cx-map-field {
+        min-height: 70px;
+    }
+
+    .cx-reference-lower-grid .cx-analysis__visual {
+        min-height: 38px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .cx-container,
+    .site-container,
+    .cx-shell__bar,
+    .cx-live-ticker__track,
+    .cx-status-strip__grid,
+    .cx-home-board__frame,
+    .cx-reference-lower-grid__layout,
+    .cx-ecosystem-strip__grid,
+    .cx-app-cta__panel,
+    .cx-footer__grid,
+    .cx-footer__bottom {
+        width: min(100% - 20px, var(--cx-container));
+    }
+}
