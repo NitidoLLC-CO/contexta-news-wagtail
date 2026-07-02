@@ -5476,3 +5476,176 @@ a {
         width: min(100% - 20px, var(--cx-container));
     }
 }
+
+/* Phase 2I.7: reference-size comfort for rows below the hero */
+@media (min-width: 1024px) {
+    .cx-home-board__frame {
+        grid-template-rows: 352px 178px;
+    }
+
+    .cx-reference-top-stories,
+    .cx-reference-models,
+    .cx-reference-watchlist {
+        height: 178px;
+        min-height: 0;
+        max-height: 178px;
+        overflow: hidden;
+    }
+
+    .cx-reference-top-stories {
+        padding: 8px;
+    }
+
+    .cx-reference-top-stories .cx-section-toolbar--compact {
+        min-height: 22px;
+        margin-bottom: 6px;
+    }
+
+    .cx-reference-top-stories .cx-kicker {
+        font-size: 0.5rem;
+        line-height: 1;
+    }
+
+    .cx-reference-top-stories .cx-section-toolbar--compact h2 {
+        overflow: hidden;
+        max-width: 430px;
+        font-size: 0.72rem;
+        line-height: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .cx-reference-top-stories .cx-filter-chips {
+        gap: 4px;
+    }
+
+    .cx-reference-top-stories .cx-filter-chips a,
+    .cx-reference-top-stories .cx-view-all {
+        padding: 5px 8px;
+        font-size: 0.5rem;
+    }
+
+    .cx-story-grid--reference {
+        gap: 7px;
+    }
+
+    .cx-story-grid--reference .cx-card,
+    .cx-static-story {
+        min-height: 132px;
+        max-height: 132px;
+    }
+
+    .cx-story-grid--reference .cx-card {
+        display: grid;
+        grid-template-rows: 58px minmax(0, 1fr);
+    }
+
+    .cx-story-grid--reference .cx-card__media,
+    .cx-static-story__visual {
+        min-height: 58px;
+    }
+
+    .cx-story-grid--reference .cx-card__body {
+        gap: 4px;
+        padding: 7px 8px;
+    }
+
+    .cx-story-grid--reference .cx-card__meta,
+    .cx-story-grid--reference .cx-card__footer,
+    .cx-static-story small,
+    .cx-static-story em {
+        font-size: 0.48rem;
+        line-height: 1.1;
+    }
+
+    .cx-story-grid--reference .cx-card h3,
+    .cx-static-story strong {
+        font-size: 0.72rem;
+        line-height: 1.14;
+    }
+
+    .cx-story-grid--reference .cx-card p,
+    .cx-story-grid--reference .cx-card__footer {
+        display: none;
+    }
+
+    .cx-static-story {
+        grid-template-rows: 58px auto minmax(0, 1fr) auto;
+        gap: 4px;
+        padding-bottom: 7px;
+    }
+
+    .cx-static-story small,
+    .cx-static-story strong,
+    .cx-static-story em {
+        margin-inline: 8px;
+    }
+
+    .cx-reference-models,
+    .cx-reference-watchlist {
+        padding: 8px;
+    }
+
+    .cx-reference-models .cx-panel-heading,
+    .cx-reference-watchlist .cx-panel-heading {
+        margin-bottom: 5px;
+    }
+
+    .cx-reference-models .cx-rank-list,
+    .cx-reference-watchlist .cx-watchlist__rows {
+        gap: 4px;
+    }
+
+    .cx-reference-models .cx-rank-list div,
+    .cx-reference-watchlist .cx-watchlist__rows div {
+        min-height: 22px;
+        padding-block: 4px;
+        font-size: 0.56rem;
+    }
+
+    .cx-reference-watchlist .cx-watchlist__rows div {
+        grid-template-columns: 38px minmax(0, 1fr) 42px auto;
+    }
+
+    .cx-reference-watchlist .cx-watchlist__rows i {
+        width: 42px;
+    }
+
+    .cx-reference-lower-grid {
+        padding-top: 7px;
+    }
+
+    .cx-reference-lower-grid .cx-data-panel {
+        height: 168px;
+        min-height: 168px;
+        padding: 10px;
+    }
+
+    .cx-reference-lower-grid .cx-panel-heading {
+        margin-bottom: 5px;
+    }
+
+    .cx-reference-lower-grid .cx-map-field {
+        min-height: 82px;
+    }
+
+    .cx-reference-lower-grid .cx-analysis__visual {
+        min-height: 46px;
+    }
+
+    .cx-reference-lower-grid .cx-trending li,
+    .cx-reference-lower-grid .cx-brief-list a {
+        min-height: 21px;
+        padding-top: 4px;
+        font-size: 0.56rem;
+    }
+
+    .cx-reference-lower-grid .cx-data-panel p,
+    .cx-reference-lower-grid .cx-data-panel span {
+        font-size: 0.6rem;
+    }
+
+    .cx-reference-lower-grid .cx-arrow-link {
+        font-size: 0.52rem;
+    }
+}
