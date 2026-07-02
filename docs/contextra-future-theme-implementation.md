@@ -276,3 +276,46 @@ Operational notes:
 - Migration: `contexta_news/news/migrations/0002_articlepage_article_context_label_and_more.py`
 - Seed command: `python manage.py seed_article_intelligence`
 - Documentation: `docs/contextra-article-intelligence-workflow.md`
+
+## Phase 2F Topic / Section Intelligence Pages
+
+Phase 2F adds real Wagtail-managed section hubs for the primary CONTEXTRA navigation without redesigning the accepted public system.
+
+Added page model:
+
+- `IntelligenceSectionPage`
+
+Added section child rows:
+
+- section metrics
+- curated Live Signals
+- curated Trending Topics
+- curated Research Briefs
+- curated Market/Watchlist Items
+
+Seeded public section pages:
+
+- `/ai/`
+- `/technology/`
+- `/companies/`
+- `/policy/`
+- `/markets/`
+- `/research/`
+
+Navigation changed:
+
+- global desktop nav now points to the real section pages
+- mobile nav now points to the real section pages
+- footer AI/Policy/Markets links now point to real section pages
+- mobile Watchlist now points to `/markets/`
+
+Article matching:
+
+- Section pages match articles by topic slug/title, article context label, title, introduction, and signal tags.
+- If no section-specific matches exist, the section falls back to the latest published articles.
+
+Operational notes:
+
+- Migration: `contexta_news/news/migrations/0003_intelligencesectionpage_sectionlivesignal_and_more.py`
+- Seed command: `python manage.py seed_contextra_sections`
+- Documentation: `docs/contextra-section-intelligence-pages.md`

@@ -1,0 +1,233 @@
+{% extends "base_page.html" %}
+{% load static wagtailcore_tags wagtailimages_tags intelligence_tags %}
+
+{% block content %}
+{% active_live_signals 5 as fallback_live_signals %}
+{% active_status_metrics 4 as fallback_metrics %}
+{% active_trending_topics 5 as fallback_trending_topics %}
+{% active_research_briefs 3 as fallback_research_briefs %}
+{% active_watchlist_items 5 as fallback_watchlist_items %}
+{% active_north_signal_brief as north_signal_brief %}
+
+<section class="cx-section-command" aria-label="{{ page.display_section_name }} intelligence command center">
+    <div class="cx-container cx-section-command__grid">
+        <div class="cx-section-command__index" aria-hidden="true">
+            <span>01</span><span>02</span><span>03</span><span>04</span>
+        </div>
+
+        <div class="cx-section-command__main">
+            {% include "navigation/breadcrumbs.html" %}
+            <p class="cx-kicker">{{ page.display_section_label }}</p>
+            <h1>{{ page.display_section_name }}</h1>
+            <p class="cx-section-command__dek">
+                {% firstof page.subtitle page.search_description "A curated CONTEXTRA intelligence section tracking the signals, institutions, companies, markets, and research shaping the AI era." %}
+            </p>
+
+            <div class="cx-section-command__metrics" aria-label="Section metrics">
+                {% for metric in page.section_metrics.all %}
+                    <span><strong>{{ metric.value }}</strong>{{ metric.label }}</span>
+                {% empty %}
+                    {% for metric in fallback_metrics %}
+                        <span><strong>{{ metric.value }}</strong>{{ metric.label }}</span>
+                    {% empty %}
+                        <span><strong>{% firstof page.signal_score "94.6" %}</strong>Section score</span>
+                        <span><strong>Live</strong>Desk active</span>
+                        <span><strong>87</strong>Countries</span>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="cx-section-command__visual" aria-hidden="true">
+            <img src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
+            <span class="cx-map-field cx-map-field--mini"><i></i><i></i><i></i><i></i></span>
+            <b>{{ page.get_visual_mode_display }}</b>
+            <em>{% if section_is_fallback %}Fallback feed active{% else %}Section scan active{% endif %}</em>
+        </div>
+
+        <aside class="cx-section-live cx-rail-panel" aria-label="Live section updates">
+            <div class="cx-panel-heading">
+                <p>Live Updates</p>
+                <span>Now tracking</span>
+            </div>
+            {% if configured_live_signals %}
+                {% for signal in configured_live_signals %}
+                    <a href="{{ signal.link_url }}">
+                        <small>{{ signal.published_at|timesince }} ago</small>
+                        <strong>{{ signal.title }}</strong>
+                        <span>{% firstof signal.category "Intelligence" %}</span>
+                    </a>
+                {% endfor %}
+            {% else %}
+                {% for signal in fallback_live_signals %}
+                    <a href="{{ signal.link_url }}">
+                        <small>{{ signal.published_at|timesince }} ago</small>
+                        <strong>{{ signal.title }}</strong>
+                        <span>{% firstof signal.category "Intelligence" %}</span>
+                    </a>
+                {% empty %}
+                    <a href="/news/"><small>Live</small><strong>CONTEXTRA section monitoring is active</strong><span>Intelligence</span></a>
+                {% endfor %}
+            {% endif %}
+        </aside>
+    </div>
+</section>
+
+<nav class="cx-chip-dock" aria-label="Section navigation">
+    <div class="cx-container cx-chip-dock__scroll">
+        <a href="/ai/" {% if page.slug == "ai" %}aria-current="page"{% endif %}>AI</a>
+        <a href="/technology/" {% if page.slug == "technology" %}aria-current="page"{% endif %}>Technology</a>
+        <a href="/companies/" {% if page.slug == "companies" %}aria-current="page"{% endif %}>Companies</a>
+        <a href="/policy/" {% if page.slug == "policy" %}aria-current="page"{% endif %}>Policy</a>
+        <a href="/markets/" {% if page.slug == "markets" %}aria-current="page"{% endif %}>Markets</a>
+        <a href="/research/" {% if page.slug == "research" %}aria-current="page"{% endif %}>Research</a>
+        <a href="/news/">All News</a>
+    </div>
+</nav>
+
+<section class="cx-section-hub" aria-label="Featured {{ page.display_section_name }} intelligence">
+    <div class="cx-container cx-section-hub__grid">
+        <main class="cx-section-hub__lead">
+            {% if featured_article %}
+                <article class="cx-section-feature">
+                    <div class="cx-section-feature__copy">
+                        <div class="cx-article-tags">
+                            {% if featured_article.topic %}<span>{{ featured_article.topic }}</span>{% endif %}
+                            <span>Featured Signal</span>
+                            {% if featured_article.display_date %}<span>{{ featured_article.display_date }}</span>{% endif %}
+                        </div>
+                        <h2><a href="{% pageurl featured_article %}">{% firstof featured_article.listing_title featured_article.title %}</a></h2>
+                        <p>{% firstof featured_article.listing_summary featured_article.plain_introduction featured_article.introduction featured_article.search_description %}</p>
+                        <div class="cx-meta-row">
+                            {% if featured_article.author %}<span>{{ featured_article.author.title }}</span>{% else %}<span>CONTEXTRA Desk</span>{% endif %}
+                            <span>{% firstof featured_article.article_context_label page.display_section_name %}</span>
+                            <span>{% firstof featured_article.impact_display "High impact" %}</span>
+                        </div>
+                        <a class="cx-arrow-link" href="{% pageurl featured_article %}">Open Briefing</a>
+                    </div>
+                    <a class="cx-section-feature__media" href="{% pageurl featured_article %}" aria-label="{{ featured_article.title }}">
+                        <img class="cx-section-feature__watermark" src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
+                        {% if featured_article.listing_image %}
+                            {% image featured_article.listing_image format-webp fill-1000x680 as featured_image %}
+                            <img src="{{ featured_image.url }}" width="{{ featured_image.width }}" height="{{ featured_image.height }}" alt="{{ featured_image.alt }}">
+                        {% endif %}
+                        <span>{% if section_is_fallback %}Latest intelligence{% else %}Lead context{% endif %}</span>
+                    </a>
+                </article>
+            {% else %}
+                <div class="cx-empty-state">No published stories are available yet.</div>
+            {% endif %}
+        </main>
+
+        <aside class="cx-section-hub__rail" aria-label="{{ page.display_section_name }} intelligence modules">
+            <section class="cx-rail-panel cx-score-panel">
+                <p class="cx-kicker">Signal Score</p>
+                <strong>{% firstof page.signal_score "94.6" %}</strong>
+                <span>{% if section_is_fallback %}Showing latest intelligence until matching stories are available.{% else %}High relevance across this section's active signals.{% endif %}</span>
+            </section>
+            <section class="cx-rail-panel cx-trending-mini">
+                <div class="cx-panel-heading"><p>Trending Topics</p><span>24h</span></div>
+                <ol>
+                    {% if configured_trending_topics %}
+                        {% for topic in configured_trending_topics %}
+                            <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
+                        {% endfor %}
+                    {% else %}
+                        {% for topic in fallback_trending_topics %}
+                            <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
+                        {% empty %}
+                            <li><span>{{ page.display_section_name }} Signals</span><em>Rising</em></li>
+                        {% endfor %}
+                    {% endif %}
+                </ol>
+            </section>
+        </aside>
+    </div>
+</section>
+
+<section class="cx-feed-section cx-feed-main cx-feed-main--command" aria-label="{{ page.display_section_name }} article feed">
+    <div class="cx-container cx-feed-main__grid">
+        <main class="cx-feed-main__stories">
+            <div class="cx-section-toolbar">
+                <div>
+                    <p class="cx-kicker">{{ page.display_section_name }} Feed</p>
+                    <h2>{% if section_is_fallback %}Latest high-signal intelligence{% else %}Section-matched developments{% endif %}</h2>
+                </div>
+                <span class="cx-feed-count">{{ section_articles|length }} active signals</span>
+            </div>
+
+            <div class="cx-feed-grid">
+                {% for article in section_articles %}
+                    {% if article != featured_article %}
+                        {% if forloop.counter == 2 %}
+                            {% include "components/card--article.html" with page=article variant="wide" %}
+                        {% elif forloop.counter == 4 or forloop.counter == 7 %}
+                            {% include "components/card--article.html" with page=article variant="signal" %}
+                        {% elif forloop.counter == 5 or forloop.counter == 8 %}
+                            {% include "components/card--article.html" with page=article variant="compact" %}
+                        {% else %}
+                            {% include "components/card--article.html" with page=article %}
+                        {% endif %}
+                    {% endif %}
+                {% empty %}
+                    <div class="cx-empty-state">No section stories are published yet.</div>
+                {% endfor %}
+            </div>
+        </main>
+
+        <aside class="cx-feed-rail cx-feed-rail--dense" aria-label="Section rail modules">
+            <section class="cx-rail-panel">
+                <div class="cx-panel-heading"><p>Watchlist</p><span>Active</span></div>
+                <div class="cx-market-snapshot">
+                    {% if configured_watchlist_items %}
+                        {% for item in configured_watchlist_items|slice:":3" %}
+                            <div><strong>{{ item.ticker }}</strong><span{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</span></div>
+                        {% endfor %}
+                    {% else %}
+                        {% for item in fallback_watchlist_items|slice:":3" %}
+                            <div><strong>{{ item.ticker }}</strong><span{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</span></div>
+                        {% empty %}
+                            <div><strong>NS</strong><span class="cx-positive">Active</span></div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="cx-rail-panel cx-north-signal-mini">
+                <p class="cx-kicker">{% firstof north_signal_brief.subtitle "North Signal Brief" %}</p>
+                <h3>{% firstof north_signal_brief.title "Daily intelligence delivered" %}</h3>
+                <p>{% firstof north_signal_brief.body "The essential morning brief for AI, markets, policy, and power." %}</p>
+                <a class="cx-arrow-link" href="{% firstof north_signal_brief.link_url '/news/' %}">{% firstof north_signal_brief.cta_label "Preview brief" %}</a>
+            </section>
+        </aside>
+    </div>
+</section>
+
+<section class="cx-section-labs" aria-label="{{ page.display_section_name }} research and analysis">
+    <div class="cx-container cx-section-labs__grid">
+        <article class="cx-data-panel cx-research">
+            <div class="cx-panel-heading"><p>Research &amp; Documents</p><span>Curated intelligence</span></div>
+            <div class="cx-brief-list">
+                {% if configured_research_briefs %}
+                    {% for brief in configured_research_briefs %}
+                        <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
+                    {% endfor %}
+                {% else %}
+                    {% for brief in fallback_research_briefs %}
+                        <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
+                    {% empty %}
+                        <a href="/news/"><span>+</span><strong>{{ page.display_section_name }} Research Brief</strong><em>Live</em></a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="cx-data-panel cx-analysis cx-deep-dive">
+            <div class="cx-panel-heading"><p>Analysis &amp; Insights</p><span>{{ page.display_section_name }}</span></div>
+            <div class="cx-analysis__visual" aria-hidden="true"></div>
+            <h3>{% firstof page.section_cta_label "Track the signals shaping this intelligence domain." %}</h3>
+            <a class="cx-arrow-link" href="{{ page.cta_url }}">Open section brief</a>
+        </article>
+    </div>
+</section>
+{% endblock %}
