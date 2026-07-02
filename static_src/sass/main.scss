@@ -5159,8 +5159,13 @@ a {
     .cx-reference-watchlist {
         height: 216px;
         max-height: 216px;
-        overflow: hidden;
-    }
+    overflow: hidden;
+}
+
+.cx-reference-lower-grid .cx-analysis,
+.cx-reference-lower-grid .cx-north-brief {
+    grid-column: auto;
+}
 
     .cx-reference-lower-grid .cx-data-panel {
         height: 176px;
