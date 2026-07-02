@@ -5659,3 +5659,42 @@ a {
         min-width: 0;
     }
 }
+
+/* Phase 2I.8: prevent compact lower modules from clipping editorial text */
+@media (min-width: 1024px) {
+    .cx-reference-lower-grid .cx-brief-list a {
+        grid-template-columns: 12px minmax(0, 1fr) auto;
+        gap: 6px;
+        overflow: hidden;
+    }
+
+    .cx-reference-lower-grid .cx-brief-list strong,
+    .cx-reference-lower-grid .cx-trending li span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .cx-reference-lower-grid .cx-brief-list strong {
+        font-size: 0.54rem;
+        line-height: 1.05;
+    }
+
+    .cx-reference-lower-grid .cx-brief-list em,
+    .cx-reference-lower-grid .cx-trending li em {
+        overflow: hidden;
+        max-width: 72px;
+        font-size: 0.48rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .cx-story-grid--reference .cx-card__placeholder--data b {
+        display: none;
+    }
+
+    .cx-story-grid--reference .cx-card__placeholder--data::before {
+        background-size: 16px 16px;
+    }
+}
