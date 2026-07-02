@@ -6004,3 +6004,78 @@ a {
         grid-template-columns: 34px minmax(0, 1.08fr) minmax(240px, 0.42fr) minmax(240px, 0.42fr);
     }
 }
+
+/* Phase 2I.13: image-dense compact story tiles */
+@media (min-width: 1024px) {
+    .cx-story-grid--reference .cx-card__media,
+    .cx-static-story__visual {
+        position: relative;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 20% 28%, rgba(38, 217, 255, 0.42), transparent 2.9rem),
+            linear-gradient(135deg, rgba(10, 55, 101, 0.94), rgba(1, 4, 10, 0.92));
+    }
+
+    .cx-story-grid--reference .cx-card__media::before,
+    .cx-static-story__visual::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(132deg, transparent 0 16%, rgba(38, 217, 255, 0.48) 16.4% 17%, transparent 17.6% 26%, rgba(243, 248, 255, 0.16) 26.4% 27.2%, transparent 27.8%),
+            repeating-linear-gradient(90deg, rgba(72, 190, 255, 0.12) 0 1px, transparent 1px 20px),
+            linear-gradient(180deg, rgba(243, 248, 255, 0.08), transparent 55%);
+        opacity: 0.82;
+    }
+
+    .cx-story-grid--reference .cx-card__media::after,
+    .cx-static-story__visual::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 42%;
+        background:
+            linear-gradient(162deg, transparent 0 12%, rgba(38, 217, 255, 0.3) 12.4% 13%, transparent 13.5% 28%, rgba(17, 119, 255, 0.24) 28.4% 29.2%, transparent 29.7%),
+            linear-gradient(180deg, transparent, rgba(1, 4, 10, 0.78));
+    }
+
+    .cx-story-grid--reference > *:nth-child(1) .cx-card__media,
+    .cx-story-grid--reference > *:nth-child(1) .cx-static-story__visual {
+        background:
+            radial-gradient(circle at 35% 44%, rgba(38, 217, 255, 0.55), transparent 3.2rem),
+            linear-gradient(115deg, rgba(8, 65, 122, 0.98), rgba(1, 4, 10, 0.9));
+    }
+
+    .cx-story-grid--reference > *:nth-child(2) .cx-card__media,
+    .cx-story-grid--reference > *:nth-child(2) .cx-static-story__visual {
+        background:
+            radial-gradient(circle at 30% 42%, rgba(38, 217, 255, 0.46), transparent 2.8rem),
+            repeating-linear-gradient(135deg, rgba(38, 217, 255, 0.28) 0 2px, transparent 2px 18px),
+            linear-gradient(135deg, rgba(4, 35, 72, 0.96), rgba(1, 4, 10, 0.92));
+    }
+
+    .cx-story-grid--reference > *:nth-child(3) .cx-card__media,
+    .cx-story-grid--reference > *:nth-child(3) .cx-static-story__visual {
+        background:
+            radial-gradient(circle at 34% 36%, rgba(38, 217, 255, 0.36), transparent 2.4rem),
+            radial-gradient(circle at 78% 66%, rgba(17, 119, 255, 0.42), transparent 3rem),
+            linear-gradient(135deg, rgba(7, 43, 80, 0.96), rgba(1, 4, 10, 0.94));
+    }
+
+    .cx-story-grid--reference > *:nth-child(4) .cx-card__media,
+    .cx-story-grid--reference > *:nth-child(4) .cx-static-story__visual {
+        background:
+            linear-gradient(158deg, transparent 0 38%, rgba(36, 214, 154, 0.48) 38.4% 39.3%, transparent 39.8%),
+            radial-gradient(circle at 76% 48%, rgba(17, 119, 255, 0.48), transparent 3rem),
+            linear-gradient(135deg, rgba(5, 37, 65, 0.98), rgba(1, 4, 10, 0.94));
+    }
+
+    .cx-story-grid--reference .cx-card__placeholder--data {
+        background: transparent;
+    }
+
+    .cx-story-grid--reference .cx-card__placeholder--data::before,
+    .cx-story-grid--reference .cx-card__placeholder--data::after {
+        opacity: 0.58;
+    }
+}
