@@ -5649,3 +5649,13 @@ a {
         font-size: 0.52rem;
     }
 }
+
+@media (min-width: 1024px) and (max-width: 1350px) {
+    .cx-reference-lower-grid__layout {
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 0.78fr) minmax(0, 0.86fr);
+    }
+
+    .cx-reference-lower-grid__layout > * {
+        min-width: 0;
+    }
+}
