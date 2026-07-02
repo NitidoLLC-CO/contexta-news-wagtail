@@ -5779,3 +5779,165 @@ a {
         opacity: 0.76;
     }
 }
+
+/* Phase 2I.10: bottom composition height parity */
+@media (min-width: 1024px) {
+    .cx-reference-lower-grid {
+        padding: 6px 0 4px;
+    }
+
+    .cx-reference-lower-grid .cx-data-panel {
+        height: 154px;
+        min-height: 154px;
+        gap: 5px;
+        padding: 8px 9px;
+    }
+
+    .cx-reference-lower-grid .cx-panel-heading {
+        margin-bottom: 3px;
+    }
+
+    .cx-reference-lower-grid .cx-map-field {
+        min-height: 68px;
+        margin: 2px 0 4px;
+    }
+
+    .cx-reference-lower-grid .cx-analysis__visual {
+        min-height: 34px;
+        margin-bottom: 2px;
+    }
+
+    .cx-reference-lower-grid .cx-analysis h3,
+    .cx-reference-lower-grid .cx-north-brief h3 {
+        font-size: 0.76rem;
+        line-height: 1.12;
+    }
+
+    .cx-reference-lower-grid .cx-trending ol,
+    .cx-reference-lower-grid .cx-brief-list {
+        gap: 3px;
+        margin-bottom: 4px;
+    }
+
+    .cx-reference-lower-grid .cx-trending li,
+    .cx-reference-lower-grid .cx-brief-list a {
+        min-height: 18px;
+        padding-top: 3px;
+    }
+
+    .cx-reference-lower-grid .cx-brief-form {
+        min-height: 26px;
+        margin: 3px 0;
+    }
+
+    .cx-reference-lower-grid .cx-brief-form input {
+        padding: 5px 9px;
+    }
+
+    .cx-reference-lower-grid .cx-brief-form button {
+        padding: 6px 9px;
+    }
+
+    .cx-ecosystem-strip--parity {
+        padding: 5px 0;
+    }
+
+    .cx-ecosystem-strip__grid {
+        min-height: 52px;
+    }
+
+    .cx-ecosystem-strip article {
+        min-height: 52px;
+        padding: 7px 12px;
+        gap: 2px 9px;
+    }
+
+    .cx-ecosystem-strip span {
+        width: 26px;
+        height: 26px;
+        font-size: 0.54rem;
+    }
+
+    .cx-ecosystem-strip strong {
+        font-size: 0.58rem;
+    }
+
+    .cx-ecosystem-strip p {
+        font-size: 0.62rem;
+        line-height: 1.18;
+    }
+
+    .cx-app-cta {
+        padding: 4px 0 6px;
+    }
+
+    .cx-app-cta--parity .cx-app-cta__panel {
+        min-height: 78px;
+        padding: 9px 16px;
+        gap: 14px;
+    }
+
+    .cx-app-cta__panel h2 {
+        margin: 0 0 4px;
+        font-size: 0.7rem;
+    }
+
+    .cx-app-cta__copy h3 {
+        margin-bottom: 3px;
+        font-size: 0.96rem;
+    }
+
+    .cx-app-cta__copy p {
+        font-size: 0.64rem;
+        line-height: 1.25;
+    }
+
+    .cx-store-badges {
+        gap: 5px;
+        margin-top: 6px;
+    }
+
+    .cx-store-badges span,
+    .cx-store-badges a {
+        padding: 5px 8px;
+        font-size: 0.5rem;
+    }
+
+    .cx-phone-ghost {
+        bottom: -38px;
+        width: 52px;
+        height: 88px;
+        border-radius: 12px;
+    }
+
+    .cx-app-cta__button {
+        padding: 8px 14px;
+        font-size: 0.56rem;
+    }
+
+    .cx-footer {
+        padding: 7px 0 8px;
+    }
+
+    .cx-footer__grid {
+        min-height: 36px;
+        gap: 20px;
+    }
+
+    .cx-footer__brand .cx-brand__mark {
+        width: 28px;
+        height: 28px;
+    }
+
+    .cx-footer__links {
+        gap: 10px;
+        font-size: 0.52rem;
+    }
+
+    .cx-footer__bottom {
+        min-height: 18px;
+        margin-top: 5px;
+        padding-top: 5px;
+        font-size: 0.5rem;
+    }
+}
