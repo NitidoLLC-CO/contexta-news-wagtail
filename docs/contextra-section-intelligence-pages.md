@@ -99,4 +99,31 @@ Fallbacks are intentionally layered:
 - Add stronger topic taxonomy and article-to-section relations.
 - Add section-specific analysis modules.
 - Add API-backed market/model/research feeds after editorial workflow stabilizes.
-- Add section-specific visual variants if the accepted design system needs more differentiation.
+- Add deeper section-specific imagery if the accepted design system needs more differentiation.
+
+## Phase 2G Section-Specific Intelligence Variants
+
+Phase 2G keeps the same `IntelligenceSectionPage` model fields and does not add a migration. The existing `visual_mode`, labels, metrics, matching terms, snippets, CTA, and featured article fields are enough for the first section-specific variant layer.
+
+Implemented variants:
+
+- AI: model signals, agentic watch, benchmark drift, frontier models, agent infrastructure, safety signals.
+- Technology: infrastructure updates, chip signals, cloud capacity, semiconductor watch, cloud buildout, systems briefs.
+- Companies: strategic moves, funding signals, model-provider watch, deals, partnerships, product launches.
+- Policy: regulation watch, export controls, sovereignty signals, government actions, safety institutes, public investment.
+- Markets: capex signals, AI infrastructure index, stock watch, market snapshot, valuation pressure, spending trends.
+- Research: paper signals, benchmark watch, evaluation notes, research briefs, model evaluations, safety findings.
+
+Template behavior:
+
+- `templates/pages/intelligence_section_page.html` reads `section_variant` from the page context.
+- Each variant changes hero visual label, right-rail headings, score copy, feed headings, watchlist headings, research headings, analysis headings, lower signal modules, and static fallback rows.
+- The page still uses the accepted CONTEXTRA shell, ticker, status strip, glass panels, North Signal identity, article feed, snippets, and fallback safeguards.
+
+Seed behavior:
+
+- `seed_contextra_sections` remains idempotent.
+- Repeated runs update the six section pages, publish revisions, refresh default metrics, and refresh default related snippet rows without creating duplicates.
+- The command now attempts to match articles and snippets against each section's expanded matching terms before using static variant fallbacks in the template.
+
+No new model fields were added in Phase 2G.

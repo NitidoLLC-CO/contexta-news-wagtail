@@ -319,3 +319,16 @@ Operational notes:
 - Migration: `contexta_news/news/migrations/0003_intelligencesectionpage_sectionlivesignal_and_more.py`
 - Seed command: `python manage.py seed_contextra_sections`
 - Documentation: `docs/contextra-section-intelligence-pages.md`
+
+## Phase 2G Section-Specific Intelligence Variants
+
+Phase 2G differentiates the six `IntelligenceSectionPage` hubs while preserving the accepted CONTEXTRA visual system and monolithic Wagtail deployment.
+
+Changed:
+
+- `IntelligenceSectionPage` now exposes a `section_variant` context object derived from the existing `visual_mode`.
+- `/ai/`, `/technology/`, `/companies/`, `/policy/`, `/markets/`, and `/research/` render distinct hero labels, rail module labels, score copy, feed headings, fallback signals, watchlist rows, research rows, and lower signal modules.
+- The section hero visual keeps the North Signal identity but adds subtle section-specific hologram patterns.
+- `seed_contextra_sections` now seeds distinct metrics and uses expanded matching terms to select related articles and snippets where available.
+
+No new fields or migrations were added.

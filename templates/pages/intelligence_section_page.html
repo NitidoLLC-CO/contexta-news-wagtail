@@ -9,7 +9,7 @@
 {% active_watchlist_items 5 as fallback_watchlist_items %}
 {% active_north_signal_brief as north_signal_brief %}
 
-<section class="cx-section-command" aria-label="{{ page.display_section_name }} intelligence command center">
+<section class="cx-section-command cx-section-command--{{ section_variant.visual_class }}" aria-label="{{ page.display_section_name }} intelligence command center">
     <div class="cx-container cx-section-command__grid">
         <div class="cx-section-command__index" aria-hidden="true">
             <span>01</span><span>02</span><span>03</span><span>04</span>
@@ -38,17 +38,20 @@
             </div>
         </div>
 
-        <div class="cx-section-command__visual" aria-hidden="true">
+        <div class="cx-section-command__visual cx-section-command__visual--{{ section_variant.visual_class }}" aria-hidden="true">
             <img src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
             <span class="cx-map-field cx-map-field--mini"><i></i><i></i><i></i><i></i></span>
-            <b>{{ page.get_visual_mode_display }}</b>
-            <em>{% if section_is_fallback %}Fallback feed active{% else %}Section scan active{% endif %}</em>
+            <span class="cx-section-glyph cx-section-glyph--{{ section_variant.visual_class }}">
+                <i></i><i></i><i></i><i></i>
+            </span>
+            <b>{{ section_variant.visual_label }}</b>
+            <em>{% if section_is_fallback %}{{ section_variant.fallback_status }}{% else %}{{ section_variant.active_status }}{% endif %}</em>
         </div>
 
         <aside class="cx-section-live cx-rail-panel" aria-label="Live section updates">
             <div class="cx-panel-heading">
-                <p>Live Updates</p>
-                <span>Now tracking</span>
+                <p>{{ section_variant.live_heading }}</p>
+                <span>{{ section_variant.live_subheading }}</span>
             </div>
             {% if configured_live_signals %}
                 {% for signal in configured_live_signals %}
@@ -59,11 +62,11 @@
                     </a>
                 {% endfor %}
             {% else %}
-                {% for signal in fallback_live_signals %}
-                    <a href="{{ signal.link_url }}">
-                        <small>{{ signal.published_at|timesince }} ago</small>
+                {% for signal in section_variant.fallback_signals %}
+                    <a href="/news/">
+                        <small>{{ signal.eyebrow }}</small>
                         <strong>{{ signal.title }}</strong>
-                        <span>{% firstof signal.category "Intelligence" %}</span>
+                        <span>{{ signal.category }}</span>
                     </a>
                 {% empty %}
                     <a href="/news/"><small>Live</small><strong>CONTEXTRA section monitoring is active</strong><span>Intelligence</span></a>
@@ -111,7 +114,7 @@
                             {% image featured_article.listing_image format-webp fill-1000x680 as featured_image %}
                             <img src="{{ featured_image.url }}" width="{{ featured_image.width }}" height="{{ featured_image.height }}" alt="{{ featured_image.alt }}">
                         {% endif %}
-                        <span>{% if section_is_fallback %}Latest intelligence{% else %}Lead context{% endif %}</span>
+                        <span>{% if section_is_fallback %}Latest intelligence{% else %}{{ section_variant.feature_label }}{% endif %}</span>
                     </a>
                 </article>
             {% else %}
@@ -121,20 +124,20 @@
 
         <aside class="cx-section-hub__rail" aria-label="{{ page.display_section_name }} intelligence modules">
             <section class="cx-rail-panel cx-score-panel">
-                <p class="cx-kicker">Signal Score</p>
+                <p class="cx-kicker">{{ section_variant.score_label }}</p>
                 <strong>{% firstof page.signal_score "94.6" %}</strong>
-                <span>{% if section_is_fallback %}Showing latest intelligence until matching stories are available.{% else %}High relevance across this section's active signals.{% endif %}</span>
+                <span>{% if section_is_fallback %}Showing latest intelligence until matching stories are available.{% else %}{{ section_variant.score_copy }}{% endif %}</span>
             </section>
             <section class="cx-rail-panel cx-trending-mini">
-                <div class="cx-panel-heading"><p>Trending Topics</p><span>24h</span></div>
+                <div class="cx-panel-heading"><p>{{ section_variant.trending_heading }}</p><span>{{ section_variant.trending_window }}</span></div>
                 <ol>
                     {% if configured_trending_topics %}
                         {% for topic in configured_trending_topics %}
                             <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
                         {% endfor %}
                     {% else %}
-                        {% for topic in fallback_trending_topics %}
-                            <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
+                        {% for topic in section_variant.fallback_topics %}
+                            <li><span>{{ topic.title }}</span><em>{{ topic.trend }}</em></li>
                         {% empty %}
                             <li><span>{{ page.display_section_name }} Signals</span><em>Rising</em></li>
                         {% endfor %}
@@ -150,8 +153,8 @@
         <main class="cx-feed-main__stories">
             <div class="cx-section-toolbar">
                 <div>
-                    <p class="cx-kicker">{{ page.display_section_name }} Feed</p>
-                    <h2>{% if section_is_fallback %}Latest high-signal intelligence{% else %}Section-matched developments{% endif %}</h2>
+                    <p class="cx-kicker">{{ section_variant.feed_kicker }}</p>
+                    <h2>{% if section_is_fallback %}{{ section_variant.fallback_heading }}{% else %}{{ section_variant.matched_heading }}{% endif %}</h2>
                 </div>
                 <span class="cx-feed-count">{{ section_articles|length }} active signals</span>
             </div>
@@ -177,15 +180,15 @@
 
         <aside class="cx-feed-rail cx-feed-rail--dense" aria-label="Section rail modules">
             <section class="cx-rail-panel">
-                <div class="cx-panel-heading"><p>Watchlist</p><span>Active</span></div>
+                <div class="cx-panel-heading"><p>{{ section_variant.watchlist_heading }}</p><span>{{ section_variant.watchlist_subheading }}</span></div>
                 <div class="cx-market-snapshot">
                     {% if configured_watchlist_items %}
                         {% for item in configured_watchlist_items|slice:":3" %}
                             <div><strong>{{ item.ticker }}</strong><span{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</span></div>
                         {% endfor %}
                     {% else %}
-                        {% for item in fallback_watchlist_items|slice:":3" %}
-                            <div><strong>{{ item.ticker }}</strong><span{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</span></div>
+                        {% for item in section_variant.fallback_watchlist|slice:":3" %}
+                            <div><strong>{{ item.ticker }}</strong><span{% if item.class %} class="{{ item.class }}"{% endif %}>{{ item.value }}</span></div>
                         {% empty %}
                             <div><strong>NS</strong><span class="cx-positive">Active</span></div>
                         {% endfor %}
@@ -206,15 +209,15 @@
 <section class="cx-section-labs" aria-label="{{ page.display_section_name }} research and analysis">
     <div class="cx-container cx-section-labs__grid">
         <article class="cx-data-panel cx-research">
-            <div class="cx-panel-heading"><p>Research &amp; Documents</p><span>Curated intelligence</span></div>
+            <div class="cx-panel-heading"><p>{{ section_variant.research_heading }}</p><span>{{ section_variant.research_subheading }}</span></div>
             <div class="cx-brief-list">
                 {% if configured_research_briefs %}
                     {% for brief in configured_research_briefs %}
                         <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
                     {% endfor %}
                 {% else %}
-                    {% for brief in fallback_research_briefs %}
-                        <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
+                    {% for brief in section_variant.fallback_briefs %}
+                        <a href="/news/"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.age }}</em></a>
                     {% empty %}
                         <a href="/news/"><span>+</span><strong>{{ page.display_section_name }} Research Brief</strong><em>Live</em></a>
                     {% endfor %}
@@ -223,10 +226,23 @@
         </article>
 
         <article class="cx-data-panel cx-analysis cx-deep-dive">
-            <div class="cx-panel-heading"><p>Analysis &amp; Insights</p><span>{{ page.display_section_name }}</span></div>
+            <div class="cx-panel-heading"><p>{{ section_variant.analysis_heading }}</p><span>{{ section_variant.analysis_subheading }}</span></div>
             <div class="cx-analysis__visual" aria-hidden="true"></div>
-            <h3>{% firstof page.section_cta_label "Track the signals shaping this intelligence domain." %}</h3>
-            <a class="cx-arrow-link" href="{{ page.cta_url }}">Open section brief</a>
+            <h3>{{ section_variant.analysis_title }}</h3>
+            <a class="cx-arrow-link" href="{{ page.cta_url }}">{% firstof page.section_cta_label "Open section brief" %}</a>
+        </article>
+
+        <article class="cx-data-panel cx-events-panel">
+            <div class="cx-panel-heading"><p>Signal Modules</p><span>{{ page.display_section_name }}</span></div>
+            <ul>
+                {% for module in section_variant.module_rows %}
+                    <li>
+                        <i>{{ module.label }}</i>
+                        <em>{{ module.text }}</em>
+                        <span>{{ module.status }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
         </article>
     </div>
 </section>

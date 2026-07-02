@@ -384,6 +384,298 @@ class SectionVisualMode(models.TextChoices):
     COMPANY_CLOUD = "company-cloud", "Company / cloud"
 
 
+SECTION_VARIANTS = {
+    SectionVisualMode.AI_CORE: {
+        "visual_class": "ai-core",
+        "visual_label": "AI CORE",
+        "live_heading": "Model Signals",
+        "live_subheading": "Agentic watch",
+        "score_label": "Model relevance",
+        "score_copy": "Tracking frontier systems, agents, benchmarks, and deployment pressure.",
+        "trending_heading": "Benchmark Drift",
+        "trending_window": "24h",
+        "watchlist_heading": "Frontier Models",
+        "watchlist_subheading": "Active systems",
+        "research_heading": "Safety Signals",
+        "research_subheading": "Evaluations",
+        "analysis_heading": "Agent Infrastructure",
+        "analysis_subheading": "AI systems",
+        "analysis_title": "Monitor the model, agent, safety, and compute signals defining AI capability.",
+        "feed_kicker": "AI Feed",
+        "matched_heading": "Model and agent developments",
+        "fallback_heading": "Latest AI-relevant intelligence",
+        "feature_label": "Model context",
+        "active_status": "Model scan active",
+        "fallback_status": "AI fallback feed",
+        "fallback_signals": [
+            {"eyebrow": "Model layer", "title": "Frontier model release windows compress", "category": "Models"},
+            {"eyebrow": "Agent layer", "title": "Enterprise agent deployments move into production", "category": "Agents"},
+            {"eyebrow": "Safety", "title": "Evaluation coverage becomes a procurement signal", "category": "Benchmarks"},
+        ],
+        "fallback_topics": [
+            {"title": "Long-context reasoning", "trend": "Rising"},
+            {"title": "Agentic AI platforms", "trend": "High"},
+            {"title": "Frontier model safety", "trend": "Active"},
+        ],
+        "fallback_watchlist": [
+            {"ticker": "GPT", "value": "Models", "class": "cx-positive"},
+            {"ticker": "AGT", "value": "Agents", "class": ""},
+            {"ticker": "EVAL", "value": "Bench", "class": ""},
+        ],
+        "fallback_briefs": [
+            {"title": "Frontier model capability brief", "age": "Live"},
+            {"title": "Agent infrastructure watch", "age": "Live"},
+            {"title": "AI safety evaluation notes", "age": "Live"},
+        ],
+        "module_rows": [
+            {"label": "Frontier Models", "text": "Capability, release cadence, and context-window competition.", "status": "Live"},
+            {"label": "Agent Infrastructure", "text": "Tool-use, orchestration, memory, and enterprise deployment.", "status": "Tracking"},
+            {"label": "Safety Signals", "text": "Evaluations, incidents, and governance pressure around model behavior.", "status": "Watch"},
+        ],
+    },
+    SectionVisualMode.CHIP_INFRASTRUCTURE: {
+        "visual_class": "technology-grid",
+        "visual_label": "COMPUTE GRID",
+        "live_heading": "Infrastructure Updates",
+        "live_subheading": "Chip signals",
+        "score_label": "Infrastructure relevance",
+        "score_copy": "Tracking chips, cloud capacity, data centers, networks, and compute constraints.",
+        "trending_heading": "Cloud Capacity",
+        "trending_window": "24h",
+        "watchlist_heading": "Semiconductor Watch",
+        "watchlist_subheading": "Compute layer",
+        "research_heading": "Systems Briefs",
+        "research_subheading": "Infrastructure",
+        "analysis_heading": "Cloud Buildout",
+        "analysis_subheading": "Technology",
+        "analysis_title": "Track the hardware, cloud, data-center, and platform signals behind AI scale.",
+        "feed_kicker": "Technology Feed",
+        "matched_heading": "Compute and infrastructure developments",
+        "fallback_heading": "Latest technology infrastructure intelligence",
+        "feature_label": "Compute context",
+        "active_status": "Grid scan active",
+        "fallback_status": "Technology fallback feed",
+        "fallback_signals": [
+            {"eyebrow": "Compute", "title": "GPU demand remains the bottleneck for AI expansion", "category": "Chips"},
+            {"eyebrow": "Cloud", "title": "Cloud providers reserve capacity for AI workloads", "category": "Cloud"},
+            {"eyebrow": "Data centers", "title": "Power availability becomes a strategic infrastructure factor", "category": "Infrastructure"},
+        ],
+        "fallback_topics": [
+            {"title": "GPU supply chains", "trend": "High"},
+            {"title": "Cloud capacity auctions", "trend": "Rising"},
+            {"title": "AI data-center power", "trend": "Active"},
+        ],
+        "fallback_watchlist": [
+            {"ticker": "GPU", "value": "Tight", "class": "cx-positive"},
+            {"ticker": "DC", "value": "Buildout", "class": ""},
+            {"ticker": "PWR", "value": "Constraint", "class": "cx-negative"},
+        ],
+        "fallback_briefs": [
+            {"title": "AI compute infrastructure brief", "age": "Live"},
+            {"title": "Cloud capacity and data-center watch", "age": "Live"},
+            {"title": "Semiconductor supply pressure notes", "age": "Live"},
+        ],
+        "module_rows": [
+            {"label": "Semiconductor Watch", "text": "GPU supply, accelerators, packaging, and fabrication constraints.", "status": "Live"},
+            {"label": "Cloud Buildout", "text": "Capacity reservations, AI regions, data-center power, and network scale.", "status": "Tracking"},
+            {"label": "Systems Briefs", "text": "The hardware and software layers enabling frontier deployment.", "status": "Watch"},
+        ],
+    },
+    SectionVisualMode.COMPANY_CLOUD: {
+        "visual_class": "companies-network",
+        "visual_label": "COMPETITIVE MAP",
+        "live_heading": "Strategic Moves",
+        "live_subheading": "Provider watch",
+        "score_label": "Competitive relevance",
+        "score_copy": "Tracking labs, providers, partnerships, funding, launches, and strategic deals.",
+        "trending_heading": "Model Provider Watch",
+        "trending_window": "24h",
+        "watchlist_heading": "Funding Signals",
+        "watchlist_subheading": "Company layer",
+        "research_heading": "Product Launches",
+        "research_subheading": "Companies",
+        "analysis_heading": "Deals & Partnerships",
+        "analysis_subheading": "Companies",
+        "analysis_title": "Track the labs, providers, deal flow, partnerships, and competitive pressure moving AI.",
+        "feed_kicker": "Companies Feed",
+        "matched_heading": "Company and lab developments",
+        "fallback_heading": "Latest company intelligence",
+        "feature_label": "Competitive context",
+        "active_status": "Company map active",
+        "fallback_status": "Company fallback feed",
+        "fallback_signals": [
+            {"eyebrow": "Provider layer", "title": "Model providers compete on enterprise distribution", "category": "Providers"},
+            {"eyebrow": "Funding", "title": "AI infrastructure financing concentrates around large labs", "category": "Capital"},
+            {"eyebrow": "Partnerships", "title": "Cloud alliances define model access and deployment routes", "category": "Deals"},
+        ],
+        "fallback_topics": [
+            {"title": "OpenAI and Microsoft alignment", "trend": "High"},
+            {"title": "Anthropic enterprise expansion", "trend": "Rising"},
+            {"title": "Nvidia ecosystem leverage", "trend": "Active"},
+        ],
+        "fallback_watchlist": [
+            {"ticker": "OAI", "value": "Lab", "class": ""},
+            {"ticker": "NVDA", "value": "Infra", "class": "cx-positive"},
+            {"ticker": "MSFT", "value": "Cloud", "class": ""},
+        ],
+        "fallback_briefs": [
+            {"title": "AI lab competitive map", "age": "Live"},
+            {"title": "Strategic deal and partnership notes", "age": "Live"},
+            {"title": "Model-provider market structure brief", "age": "Live"},
+        ],
+        "module_rows": [
+            {"label": "Deals", "text": "Funding, acquisitions, cloud commitments, and model access agreements.", "status": "Live"},
+            {"label": "Partnerships", "text": "Provider alliances, enterprise channels, and infrastructure relationships.", "status": "Tracking"},
+            {"label": "Product Launches", "text": "Model releases, enterprise tools, platform bundles, and distribution shifts.", "status": "Watch"},
+        ],
+    },
+    SectionVisualMode.POLICY_GOVERNMENT: {
+        "visual_class": "policy-signal",
+        "visual_label": "POLICY / GOVERNMENT",
+        "live_heading": "Regulation Watch",
+        "live_subheading": "Export controls",
+        "score_label": "Policy relevance",
+        "score_copy": "Tracking regulation, sovereignty, safety institutes, public adoption, and state power.",
+        "trending_heading": "Sovereignty Signals",
+        "trending_window": "24h",
+        "watchlist_heading": "Government Actions",
+        "watchlist_subheading": "Public sector",
+        "research_heading": "Safety Institutes",
+        "research_subheading": "Policy research",
+        "analysis_heading": "Public Investment",
+        "analysis_subheading": "Policy",
+        "analysis_title": "Track the regulations, safety institutions, export controls, and public-sector AI signals.",
+        "feed_kicker": "Policy Feed",
+        "matched_heading": "Regulatory and government developments",
+        "fallback_heading": "Latest policy intelligence",
+        "feature_label": "Policy context",
+        "active_status": "Policy scan active",
+        "fallback_status": "Policy fallback feed",
+        "fallback_signals": [
+            {"eyebrow": "Regulation", "title": "AI rulemaking moves from principles to enforcement", "category": "Regulation"},
+            {"eyebrow": "Export control", "title": "Compute restrictions reshape national AI strategies", "category": "Trade"},
+            {"eyebrow": "Sovereignty", "title": "Governments fund domestic model and cloud capacity", "category": "Sovereignty"},
+        ],
+        "fallback_topics": [
+            {"title": "AI sovereignty programs", "trend": "High"},
+            {"title": "Export-control compliance", "trend": "Rising"},
+            {"title": "Safety institute mandates", "trend": "Active"},
+        ],
+        "fallback_watchlist": [
+            {"ticker": "ACT", "value": "Rules", "class": ""},
+            {"ticker": "GOV", "value": "Spend", "class": "cx-positive"},
+            {"ticker": "XCTL", "value": "Tight", "class": "cx-negative"},
+        ],
+        "fallback_briefs": [
+            {"title": "AI regulation and enforcement brief", "age": "Live"},
+            {"title": "Export control impact notes", "age": "Live"},
+            {"title": "Public-sector AI adoption watch", "age": "Live"},
+        ],
+        "module_rows": [
+            {"label": "Government Actions", "text": "Regulations, procurement rules, agency guidance, and public investment.", "status": "Live"},
+            {"label": "Safety Institutes", "text": "Testing mandates, model evaluations, standards, and oversight bodies.", "status": "Tracking"},
+            {"label": "Public Investment", "text": "Sovereign cloud, national compute, defense adoption, and public-sector pilots.", "status": "Watch"},
+        ],
+    },
+    SectionVisualMode.MARKET_CHART: {
+        "visual_class": "market-chart",
+        "visual_label": "MARKET / CHART",
+        "live_heading": "Capex Signals",
+        "live_subheading": "AI infra index",
+        "score_label": "Market relevance",
+        "score_copy": "Tracking AI capex, cloud spending, semiconductor exposure, stocks, and valuation pressure.",
+        "trending_heading": "Stock Watch",
+        "trending_window": "24h",
+        "watchlist_heading": "Market Snapshot",
+        "watchlist_subheading": "AI exposure",
+        "research_heading": "Spending Trends",
+        "research_subheading": "Markets",
+        "analysis_heading": "Valuation Pressure",
+        "analysis_subheading": "Markets",
+        "analysis_title": "Track the capex, valuation, stock, cloud-spend, and infrastructure investment signals.",
+        "feed_kicker": "Markets Feed",
+        "matched_heading": "Capital and market developments",
+        "fallback_heading": "Latest market intelligence",
+        "feature_label": "Market context",
+        "active_status": "Market scan active",
+        "fallback_status": "Markets fallback feed",
+        "fallback_signals": [
+            {"eyebrow": "Capex", "title": "AI infrastructure spending continues to set market expectations", "category": "Capex"},
+            {"eyebrow": "Stocks", "title": "Semiconductor exposure drives strategic-technology baskets", "category": "Equities"},
+            {"eyebrow": "Cloud", "title": "Cloud AI revenue becomes a key valuation signal", "category": "Spending"},
+        ],
+        "fallback_topics": [
+            {"title": "AI capex cycle", "trend": "High"},
+            {"title": "Semiconductor index pressure", "trend": "Rising"},
+            {"title": "Cloud spending guidance", "trend": "Active"},
+        ],
+        "fallback_watchlist": [
+            {"ticker": "AIQ", "value": "+2.1%", "class": "cx-positive"},
+            {"ticker": "GPUX", "value": "+1.4%", "class": "cx-positive"},
+            {"ticker": "CLD", "value": "-0.3%", "class": "cx-negative"},
+        ],
+        "fallback_briefs": [
+            {"title": "AI capex and cloud-spending brief", "age": "Live"},
+            {"title": "Semiconductor index exposure notes", "age": "Live"},
+            {"title": "Valuation pressure and infrastructure demand watch", "age": "Live"},
+        ],
+        "module_rows": [
+            {"label": "Market Snapshot", "text": "AI infrastructure exposure, semiconductor baskets, and cloud spending signals.", "status": "Live"},
+            {"label": "Valuation Pressure", "text": "Earnings expectations, capex commitments, and multiples tied to AI demand.", "status": "Tracking"},
+            {"label": "Spending Trends", "text": "Enterprise AI budgets, cloud commitments, and infrastructure investment cycles.", "status": "Watch"},
+        ],
+    },
+    SectionVisualMode.RESEARCH_NETWORK: {
+        "visual_class": "research-graph",
+        "visual_label": "RESEARCH GRAPH",
+        "live_heading": "Paper Signals",
+        "live_subheading": "Benchmark watch",
+        "score_label": "Research relevance",
+        "score_copy": "Tracking papers, benchmarks, evaluations, model behavior, tool-use, and safety research.",
+        "trending_heading": "Evaluation Notes",
+        "trending_window": "24h",
+        "watchlist_heading": "Model Evaluations",
+        "watchlist_subheading": "Research layer",
+        "research_heading": "Research Briefs",
+        "research_subheading": "Papers",
+        "analysis_heading": "Safety Findings",
+        "analysis_subheading": "Research",
+        "analysis_title": "Track papers, benchmarks, evaluations, reasoning, tool-use, and model behavior signals.",
+        "feed_kicker": "Research Feed",
+        "matched_heading": "Research and evaluation developments",
+        "fallback_heading": "Latest research intelligence",
+        "feature_label": "Research context",
+        "active_status": "Research graph active",
+        "fallback_status": "Research fallback feed",
+        "fallback_signals": [
+            {"eyebrow": "Papers", "title": "Reasoning evaluations put new pressure on benchmark design", "category": "Research"},
+            {"eyebrow": "Tool-use", "title": "Agent benchmarks shift toward real task completion", "category": "Evaluation"},
+            {"eyebrow": "Safety", "title": "Model behavior research tracks robustness under deployment", "category": "Safety"},
+        ],
+        "fallback_topics": [
+            {"title": "Reasoning benchmarks", "trend": "High"},
+            {"title": "Tool-use evaluation", "trend": "Rising"},
+            {"title": "Model behavior safety", "trend": "Active"},
+        ],
+        "fallback_watchlist": [
+            {"ticker": "EVAL", "value": "Bench", "class": ""},
+            {"ticker": "RAG", "value": "Tool", "class": ""},
+            {"ticker": "SAFE", "value": "Watch", "class": "cx-positive"},
+        ],
+        "fallback_briefs": [
+            {"title": "Reasoning and long-context research brief", "age": "Live"},
+            {"title": "Tool-use benchmark watch", "age": "Live"},
+            {"title": "Model behavior and safety findings", "age": "Live"},
+        ],
+        "module_rows": [
+            {"label": "Research Briefs", "text": "Papers, lab notes, benchmark releases, and frontier technical evidence.", "status": "Live"},
+            {"label": "Model Evaluations", "text": "Reasoning, tool-use, long-context, robustness, and deployment benchmarks.", "status": "Tracking"},
+            {"label": "Safety Findings", "text": "Behavior, alignment, reliability, and risk signals from applied research.", "status": "Watch"},
+        ],
+    },
+}
+
+
 class IntelligenceSectionPage(BasePage):
     template = "pages/intelligence_section_page.html"
     parent_page_types = ["home.HomePage"]
@@ -479,6 +771,10 @@ class IntelligenceSectionPage(BasePage):
     def cta_url(self):
         return self.section_cta_url or "/news/"
 
+    @property
+    def section_variant(self):
+        return SECTION_VARIANTS.get(self.visual_mode, SECTION_VARIANTS[SectionVisualMode.AI_CORE])
+
     def get_matching_articles(self):
         queryset = (
             ArticlePage.objects.live()
@@ -494,6 +790,12 @@ class IntelligenceSectionPage(BasePage):
             query |= Q(article_context_label__icontains=term)
             query |= Q(title__icontains=term)
             query |= Q(introduction__icontains=term)
+            query |= Q(search_description__icontains=term)
+            query |= Q(listing_title__icontains=term)
+            query |= Q(listing_summary__icontains=term)
+            query |= Q(intelligence_note__icontains=term)
+            query |= Q(impact_model_title__icontains=term)
+            query |= Q(impact_model_notes__icontains=term)
             query |= Q(signal_tags__label__icontains=term)
         if query:
             matched = queryset.filter(query).distinct()
@@ -514,6 +816,7 @@ class IntelligenceSectionPage(BasePage):
         context["section_articles"] = articles
         context["featured_article"] = featured
         context["section_is_fallback"] = is_fallback
+        context["section_variant"] = self.section_variant
         context["configured_live_signals"] = [
             item.signal for item in self.section_live_signals.all() if item.signal
         ]
