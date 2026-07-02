@@ -8,46 +8,35 @@
 {% active_trending_topics 5 as trending_topics %}
 {% active_research_briefs 3 as research_briefs %}
 {% active_north_signal_brief as north_signal_brief %}
-<section class="cx-home-hero" aria-label="Lead intelligence story">
-    <div class="cx-container cx-home-hero__grid">
+
+<section class="cx-home-board" aria-label="CONTEXTRA home command center">
+    <div class="cx-container cx-home-board__frame">
         <div class="cx-hero-index" aria-hidden="true">
-            <span>01</span>
-            <span>02</span>
-            <span>03</span>
-            <span>04</span>
-            <span>05</span>
+            <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
         </div>
 
-        <article class="cx-lead-system cx-lead-system--war-room">
+        <article class="cx-lead-system cx-lead-system--reference">
             <div class="cx-lead-system__content">
                 {% if lead_article %}
-                    <p class="cx-kicker">{{ lead_article.topic }}</p>
+                    <p class="cx-kicker">{% firstof lead_article.topic "Deployment Test" %}</p>
                     <h1><a href="{% pageurl lead_article %}">{{ lead_article.title }}</a></h1>
-                    <p class="cx-lead-system__summary">
-                        {% firstof lead_article.listing_summary lead_article.plain_introduction lead_article.introduction %}
-                    </p>
+                    <p class="cx-lead-system__summary">{% firstof lead_article.listing_summary lead_article.plain_introduction lead_article.introduction lead_article.search_description %}</p>
                     <div class="cx-meta-row">
                         <span>{{ lead_article.display_date }}</span>
-                        <span>{{ lead_article.author.title }}</span>
-                        <span>Signal strength 92.4</span>
+                        <span>{% if lead_article.author %}{{ lead_article.author.title }}{% else %}CONTEXTRA Editorial{% endif %}</span>
+                        <span>{% firstof lead_article.impact_display "High impact" %}</span>
                     </div>
                     <div class="cx-lead-metrics" aria-label="Lead story intelligence metrics">
-                        <span><strong>92.4</strong>Signal strength</span>
-                        <span><strong>High</strong>Confidence</span>
-                        <span><strong>Live</strong>Global scan</span>
+                        <span><strong>{% firstof lead_article.signal_score "92.4" %}</strong>Signal strength</span>
+                        <span><strong>{{ lead_article.confidence_display }}</strong>Confidence</span>
+                        <span><strong>{{ lead_article.time_sensitivity_display }}</strong>Horizon</span>
                     </div>
                     <a class="cx-arrow-link" href="{% pageurl lead_article %}">Read Full Story</a>
                 {% else %}
                     <p class="cx-kicker">Deployment Test</p>
                     <h1>AI intelligence for a world moving faster than institutions.</h1>
-                    <p class="cx-lead-system__summary">
-                        CONTEXTRA tracks AI, technology, companies, policy, markets, and research through a future-ready intelligence newsroom.
-                    </p>
-                    <div class="cx-meta-row">
-                        <span>Live desk</span>
-                        <span>CONTEXTRA Editorial</span>
-                        <span>Signal strength 92.4</span>
-                    </div>
+                    <p class="cx-lead-system__summary">CONTEXTRA tracks AI, technology, companies, policy, markets, and research through a future-ready intelligence newsroom.</p>
+                    <div class="cx-meta-row"><span>Live desk</span><span>CONTEXTRA Editorial</span><span>High impact</span></div>
                     <div class="cx-lead-metrics" aria-label="Lead story intelligence metrics">
                         <span><strong>92.4</strong>Signal strength</span>
                         <span><strong>High</strong>Confidence</span>
@@ -57,7 +46,8 @@
                 {% endif %}
             </div>
 
-            <div class="cx-lead-system__visual">
+            <div class="cx-lead-system__visual cx-data-visual cx-data-visual--train">
+                <img class="cx-lead-system__brand-watermark" src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
                 <div class="contextra-signal-visual" aria-hidden="true">
                     <span class="contextra-data-grid"></span>
                     <span class="contextra-hologram-core"></span>
@@ -68,19 +58,18 @@
                     <span class="contextra-map-node contextra-map-node--one"></span>
                     <span class="contextra-map-node contextra-map-node--two"></span>
                     <span class="contextra-map-node contextra-map-node--three"></span>
-                    <span class="contextra-micro-panel contextra-micro-panel--one">Signal 92.4</span>
-                    <span class="contextra-micro-panel contextra-micro-panel--two">Confidence High</span>
+                    <span class="contextra-micro-panel contextra-micro-panel--one">Signal {% if lead_article %}{% firstof lead_article.signal_score "92.4" %}{% else %}92.4{% endif %}</span>
+                    <span class="contextra-micro-panel contextra-micro-panel--two">Confidence {% if lead_article %}{{ lead_article.confidence_display }}{% else %}High{% endif %}</span>
                     <span class="contextra-micro-panel contextra-micro-panel--three">Global Scan Active</span>
                 </div>
-                <img class="cx-lead-system__brand-watermark" src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
                 {% if lead_article and lead_article.listing_image %}
-                    {% image lead_article.listing_image format-webp fill-1000x680 as lead_image %}
+                    {% image lead_article.listing_image format-webp fill-1100x700 as lead_image %}
                     <img src="{{ lead_image.url }}" width="{{ lead_image.width }}" height="{{ lead_image.height }}" alt="{{ lead_image.alt }}">
                 {% endif %}
             </div>
         </article>
 
-        <aside class="cx-live-panel" aria-label="Live Signals">
+        <aside class="cx-live-panel cx-live-panel--reference" aria-label="Live Signals">
             <div class="cx-panel-heading">
                 <p>Live Signals</p>
                 <a href="/news/">View all</a>
@@ -100,7 +89,7 @@
                         <a href="{% pageurl article %}">
                             <span>{{ article.topic }}</span>
                             <strong>{{ article.title }}</strong>
-                            <em class="cx-impact-badge">High impact</em>
+                            <em class="cx-impact-badge">{% firstof article.impact_display "High impact" %}</em>
                             <small>{% firstof article.display_date "Now" %}</small>
                         </a>
                     {% endfor %}
@@ -111,49 +100,39 @@
                 {% endif %}
             </div>
         </aside>
-    </div>
-</section>
 
-<section class="cx-top-stories" aria-label="Top Stories">
-    <div class="cx-container">
-        <div class="cx-section-toolbar">
-            <div>
-                <p class="cx-kicker">Top Stories</p>
-                <h2>Curated high-signal developments</h2>
+        <section class="cx-reference-top-stories" aria-label="Top Stories">
+            <div class="cx-section-toolbar cx-section-toolbar--compact">
+                <div>
+                    <p class="cx-kicker">Top Stories</p>
+                    <h2>Curated high-signal developments</h2>
+                </div>
+                <div class="cx-filter-chips" aria-label="Story filters">
+                    <a href="/news/">All</a>
+                    <a href="/ai/">AI</a>
+                    <a href="/technology/">Tech</a>
+                    <a href="/policy/">Policy</a>
+                    <a href="/markets/">Markets</a>
+                </div>
+                <a class="cx-view-all" href="/news/">View all</a>
             </div>
-            <div class="cx-filter-chips" aria-label="Story filters">
-                <a href="/news/">All</a>
-                <a href="/news/?topic=ai">AI</a>
-                <a href="/news/?topic=technology">Tech</a>
-                <a href="/news/?topic=policy">Policy</a>
-                <a href="/news/?topic=markets">Markets</a>
+            <div class="cx-story-grid cx-story-grid--reference">
+                {% for article in top_stories %}
+                    {% if forloop.first %}
+                        {% include "components/card--article.html" with page=article variant="feature" %}
+                    {% elif forloop.counter == 4 %}
+                        {% include "components/card--article.html" with page=article variant="compact" %}
+                    {% else %}
+                        {% include "components/card--article.html" with page=article %}
+                    {% endif %}
+                {% empty %}
+                    {% include "components/card.html" with page=page %}
+                {% endfor %}
             </div>
-            <a class="cx-view-all" href="/news/">View all</a>
-        </div>
+        </section>
 
-        <div class="cx-story-grid">
-            {% for article in top_stories %}
-                {% if forloop.first %}
-                    {% include "components/card--article.html" with page=article variant="feature" %}
-                {% elif forloop.counter == 4 %}
-                    {% include "components/card--article.html" with page=article variant="compact" %}
-                {% else %}
-                    {% include "components/card--article.html" with page=article %}
-                {% endif %}
-            {% empty %}
-                {% include "components/card.html" with page=page %}
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="cx-intelligence-grid" aria-label="Intelligence modules">
-    <div class="cx-container cx-intelligence-grid__layout">
-        <article class="cx-data-panel cx-model-tracker">
-            <div class="cx-panel-heading">
-                <p>AI Models Tracker</p>
-                <a href="/news/">View all</a>
-            </div>
+        <article class="cx-data-panel cx-model-tracker cx-reference-models">
+            <div class="cx-panel-heading"><p>AI Models Tracker</p><a href="/ai/">View all</a></div>
             <div class="cx-rank-list">
                 {% for model in model_tracker_items %}
                     <div><span>{{ model.model_name }}</span><strong>{{ model.score }}</strong><em>{% firstof model.delta model.status %}</em></div>
@@ -167,11 +146,8 @@
             </div>
         </article>
 
-        <article class="cx-data-panel cx-watchlist">
-            <div class="cx-panel-heading">
-                <p>Watchlist</p>
-                <a href="/news/">Manage</a>
-            </div>
+        <article class="cx-data-panel cx-watchlist cx-reference-watchlist">
+            <div class="cx-panel-heading"><p>Watchlist</p><a href="/markets/">Manage</a></div>
             <div class="cx-watchlist__rows">
                 {% for item in watchlist_items %}
                     <div><strong>{{ item.ticker }}</strong><span>{{ item.company_name }}</span><i{% if item.sparkline_class %} class="{{ item.sparkline_class }}"{% endif %}></i><em{% if item.delta_class %} class="{{ item.delta_class }}"{% endif %}>{% firstof item.delta item.value %}</em></div>
@@ -184,23 +160,18 @@
                 {% endfor %}
             </div>
         </article>
+    </div>
+</section>
 
+<section class="cx-reference-lower-grid" aria-label="Lower intelligence dashboard">
+    <div class="cx-container cx-reference-lower-grid__layout">
         <article class="cx-data-panel cx-signal-map">
-            <div class="cx-panel-heading">
-                <p>Signal Map</p>
-                <span>Live global activity</span>
-            </div>
-            <div class="cx-map-field" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
+            <div class="cx-panel-heading"><p>Signal Map</p><span>Live global activity</span></div>
+            <div class="cx-map-field" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
             <a class="cx-arrow-link" href="/news/">View interactive map</a>
         </article>
-
         <article class="cx-data-panel cx-trending">
-            <div class="cx-panel-heading">
-                <p>Trending Signals</p>
-                <span>Last 24 hours</span>
-            </div>
+            <div class="cx-panel-heading"><p>Trending Signals</p><span>Last 24 hours</span></div>
             <ol>
                 {% for topic in trending_topics %}
                     <li><span>{{ topic.title }}</span><em>{{ topic.get_trend_label_display }}</em></li>
@@ -214,23 +185,15 @@
             </ol>
             <a class="cx-arrow-link" href="/news/">View all signals</a>
         </article>
-
         <article class="cx-data-panel cx-analysis">
-            <div class="cx-panel-heading">
-                <p>Analysis & Insights</p>
-                <span>Expert perspectives</span>
-            </div>
+            <div class="cx-panel-heading"><p>Analysis &amp; Insights</p><span>Expert perspectives</span></div>
             <div class="cx-analysis__visual" aria-hidden="true"></div>
             <h3>The great infrastructure realignment: powering the AI century</h3>
-            <p>By N. Ortiz · Senior Analyst · 3h ago</p>
+            <p>By CONTEXTRA Senior Analyst</p>
             <a class="cx-arrow-link" href="/news/">View all analysis</a>
         </article>
-
         <article class="cx-data-panel cx-research">
-            <div class="cx-panel-heading">
-                <p>Research Briefs</p>
-                <span>Curated intelligence</span>
-            </div>
+            <div class="cx-panel-heading"><p>Research Briefs</p><span>Curated intelligence</span></div>
             <div class="cx-brief-list">
                 {% for brief in research_briefs %}
                     <a href="{{ brief.link_url }}"><span>+</span><strong>{{ brief.title }}</strong><em>{{ brief.published_at|timesince }} ago</em></a>
@@ -242,7 +205,6 @@
             </div>
             <a class="cx-arrow-link" href="/news/">View all research</a>
         </article>
-
         <article class="cx-data-panel cx-north-brief">
             <p class="cx-kicker">{% firstof north_signal_brief.subtitle "North Signal Brief" %}</p>
             <h3>{% firstof north_signal_brief.title "Daily intelligence delivered" %}</h3>
@@ -259,9 +221,7 @@
 
 {% if page.body %}
     <section class="cx-section cx-home-body">
-        <div class="cx-container">
-            {% include_block page.body %}
-        </div>
+        <div class="cx-container">{% include_block page.body %}</div>
     </section>
 {% endif %}
 {% endblock %}

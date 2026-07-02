@@ -9,7 +9,7 @@
 {% active_watchlist_items 5 as fallback_watchlist_items %}
 {% active_north_signal_brief as north_signal_brief %}
 
-<section class="cx-section-command cx-section-command--{{ section_variant.visual_class }}" aria-label="{{ page.display_section_name }} intelligence command center">
+<section class="cx-section-command cx-section-command--compact cx-section-command--parity cx-section-command--{{ section_variant.visual_class }}" aria-label="{{ page.display_section_name }} intelligence command center">
     <div class="cx-container cx-section-command__grid">
         <div class="cx-section-command__index" aria-hidden="true">
             <span>01</span><span>02</span><span>03</span><span>04</span>
@@ -88,11 +88,11 @@
     </div>
 </nav>
 
-<section class="cx-section-hub" aria-label="Featured {{ page.display_section_name }} intelligence">
+<section class="cx-section-hub cx-section-hub--parity" aria-label="Featured {{ page.display_section_name }} intelligence">
     <div class="cx-container cx-section-hub__grid">
         <main class="cx-section-hub__lead">
             {% if featured_article %}
-                <article class="cx-section-feature">
+                <article class="cx-section-feature cx-section-feature--compact">
                     <div class="cx-section-feature__copy">
                         <div class="cx-article-tags">
                             {% if featured_article.topic %}<span>{{ featured_article.topic }}</span>{% endif %}

@@ -6,8 +6,9 @@
             {% image page.listing_image format-webp fill-900x600 as card_image %}
             <img src="{{ card_image.url }}" width="{{ card_image.width }}" height="{{ card_image.height }}" alt="{{ card_image.alt }}">
         {% else %}
-            <span class="cx-card__placeholder cx-card__placeholder--asset">
-                <img src="{% static 'images/contextra/north-signal-mark-small.webp' %}" alt="">
+            <span class="cx-card__placeholder cx-card__placeholder--data">
+                <i></i>
+                <i></i>
                 <i></i>
                 <b>Signal linked</b>
             </span>
