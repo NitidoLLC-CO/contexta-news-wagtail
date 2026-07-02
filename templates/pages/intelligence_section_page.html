@@ -109,7 +109,6 @@
                         <a class="cx-arrow-link" href="{% pageurl featured_article %}">Open Briefing</a>
                     </div>
                     <a class="cx-section-feature__media" href="{% pageurl featured_article %}" aria-label="{{ featured_article.title }}">
-                        <img class="cx-section-feature__watermark" src="{% static 'images/contextra/north-signal-glow.webp' %}" alt="">
                         {% if featured_article.listing_image %}
                             {% image featured_article.listing_image format-webp fill-1000x680 as featured_image %}
                             <img src="{{ featured_image.url }}" width="{{ featured_image.width }}" height="{{ featured_image.height }}" alt="{{ featured_image.alt }}">
