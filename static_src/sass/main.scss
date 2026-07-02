@@ -5997,3 +5997,10 @@ a {
         display: none;
     }
 }
+
+/* Phase 2I.12: reference column proportions below the hero */
+@media (min-width: 1024px) {
+    .cx-home-board__frame {
+        grid-template-columns: 34px minmax(0, 1.08fr) minmax(240px, 0.42fr) minmax(240px, 0.42fr);
+    }
+}
