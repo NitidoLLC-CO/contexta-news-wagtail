@@ -4654,3 +4654,96 @@ a {
             var(--cx-panel);
     }
 }
+
+/* Phase 2I.2: desktop app-canvas width parity */
+@media (min-width: 1024px) {
+    :root {
+        --cx-container: 1840px;
+    }
+
+    .cx-container,
+    .site-container {
+        width: min(100% - 28px, var(--cx-container));
+    }
+
+    .site-padding {
+        padding-inline: max(14px, calc((100vw - var(--cx-container)) / 2));
+    }
+
+    .cx-shell__bar,
+    .cx-live-ticker__track,
+    .cx-status-strip__grid,
+    .cx-home-board__frame,
+    .cx-reference-lower-grid__layout,
+    .cx-section-command__grid,
+    .cx-section-hub__grid,
+    .cx-feed-main__grid,
+    .cx-section-labs__grid,
+    .cx-article-briefing__grid,
+    .cx-article-intel-layout,
+    .cx-ecosystem-strip__grid,
+    .cx-app-cta__panel,
+    .cx-footer__grid,
+    .cx-footer__bottom {
+        width: min(100% - 28px, var(--cx-container));
+        max-width: none;
+    }
+
+    .cx-home-board {
+        padding-top: 14px;
+    }
+
+    .cx-home-board__frame {
+        grid-template-columns: 38px minmax(0, 1.08fr) minmax(280px, 0.34fr) minmax(280px, 0.34fr);
+        gap: 10px;
+    }
+
+    .cx-lead-system--reference {
+        min-height: 390px;
+        grid-template-columns: minmax(360px, 0.82fr) minmax(520px, 1.18fr);
+    }
+
+    .cx-lead-system--reference .cx-lead-system__visual,
+    .cx-lead-system--reference .cx-lead-system__visual img {
+        min-height: 390px;
+    }
+
+    .cx-reference-lower-grid__layout {
+        grid-template-columns: minmax(320px, 0.95fr) minmax(260px, 0.64fr) minmax(340px, 0.86fr) minmax(300px, 0.76fr) minmax(320px, 0.82fr);
+        gap: 10px;
+    }
+
+    .cx-section-command--compact .cx-section-command__grid {
+        grid-template-columns: 30px minmax(0, 1.12fr) minmax(340px, 0.5fr) minmax(300px, 0.36fr);
+    }
+
+    .cx-section-feature--compact {
+        grid-template-columns: minmax(0, 1fr) minmax(430px, 0.72fr);
+    }
+
+    .cx-article-briefing--parity .cx-article-briefing__grid {
+        grid-template-columns: minmax(0, 1fr) minmax(500px, 0.58fr);
+    }
+}
+
+@media (min-width: 1600px) {
+    .cx-container,
+    .site-container,
+    .cx-shell__bar,
+    .cx-live-ticker__track,
+    .cx-status-strip__grid,
+    .cx-home-board__frame,
+    .cx-reference-lower-grid__layout,
+    .cx-section-command__grid,
+    .cx-section-hub__grid,
+    .cx-feed-main__grid,
+    .cx-section-labs__grid,
+    .cx-article-briefing__grid,
+    .cx-article-intel-layout,
+    .cx-ecosystem-strip__grid,
+    .cx-app-cta__panel,
+    .cx-footer__grid,
+    .cx-footer__bottom {
+        width: min(100% - 40px, var(--cx-container));
+    }
+}
