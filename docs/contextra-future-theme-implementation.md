@@ -332,3 +332,32 @@ Changed:
 - `seed_contextra_sections` now seeds distinct metrics and uses expanded matching terms to select related articles and snippets where available.
 
 No new fields or migrations were added.
+
+## Phase 2H Editorial Production Workflow
+
+Phase 2H adds newsroom production controls to `ArticlePage` without redesigning the public frontend.
+
+Added:
+
+- editorial status, verification status, source status, urgency level, and numeric editorial priority
+- promotion flags for homepage, section, live-signal, breaking, and newsletter intent
+- AI production metadata and human review fields
+- internal editorial, verification, and source notes
+- production checklist booleans
+- ordered `ArticleSourceReference` rows for source URLs, type, confidence, primary-source flag, and notes
+
+Promotion behavior:
+
+- homepage article selection now prefers `promote_on_homepage=True` articles ordered by priority/date, then latest articles
+- section pages now prefer `promote_in_section=True` matching articles ordered by priority/date, then other matches, then latest articles
+
+Public frontend impact is intentionally minimal:
+
+- article pages may show safe public workflow badges such as Developing, Verified, Official source, or Primary document
+- internal notes and source rows are not exposed publicly
+
+Operational notes:
+
+- Migration: `contexta_news/news/migrations/0004_articlepage_ai_fact_checked_and_more.py`
+- Seed command: `python manage.py seed_editorial_workflow`
+- Documentation: `docs/contextra-editorial-production-workflow.md`

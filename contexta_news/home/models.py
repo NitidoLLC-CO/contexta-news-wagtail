@@ -43,12 +43,7 @@ class HomePage(BasePage):
 
         from contexta_news.news.models import ArticlePage
 
-        articles = list(
-            ArticlePage.objects.live()
-            .public()
-            .select_related("listing_image", "author", "topic")
-            .order_by("-first_published_at")[:12]
-        )
+        articles = ArticlePage.homepage_articles(limit=12)
 
         context["lead_article"] = articles[0] if articles else None
         context["latest_signals"] = articles[1:5]

@@ -35,6 +35,52 @@ class TimeSensitivity(models.TextChoices):
     URGENT = "urgent", "Urgent"
 
 
+class EditorialStatus(models.TextChoices):
+    IDEA = "idea", "Idea"
+    ASSIGNED = "assigned", "Assigned"
+    AI_DRAFTED = "ai_drafted", "AI drafted"
+    IN_REVIEW = "in_review", "In review"
+    VERIFIED = "verified", "Verified"
+    READY_TO_PUBLISH = "ready_to_publish", "Ready to publish"
+    PUBLISHED = "published", "Published"
+    ARCHIVED = "archived", "Archived"
+
+
+class VerificationStatus(models.TextChoices):
+    UNVERIFIED = "unverified", "Unverified"
+    SOURCE_CHECKED = "source_checked", "Source checked"
+    CROSS_CHECKED = "cross_checked", "Cross checked"
+    LEGALLY_SENSITIVE = "legally_sensitive", "Legally sensitive"
+    VERIFIED = "verified", "Verified"
+    DISPUTED = "disputed", "Disputed"
+
+
+class SourceStatus(models.TextChoices):
+    SINGLE_SOURCE = "single_source", "Single source"
+    MULTI_SOURCE = "multi_source", "Multi source"
+    OFFICIAL_SOURCE = "official_source", "Official source"
+    PRIMARY_DOCUMENT = "primary_document", "Primary document"
+    WIRE_VERIFIED = "wire_verified", "Wire verified"
+    INTERNAL_ANALYSIS = "internal_analysis", "Internal analysis"
+
+
+class UrgencyLevel(models.TextChoices):
+    NORMAL = "normal", "Normal"
+    DEVELOPING = "developing", "Developing"
+    URGENT = "urgent", "Urgent"
+    BREAKING = "breaking", "Breaking"
+
+
+class SourceReferenceType(models.TextChoices):
+    OFFICIAL = "official", "Official"
+    COMPANY = "company", "Company"
+    GOVERNMENT = "government", "Government"
+    WIRE = "wire", "Wire"
+    RESEARCH = "research", "Research"
+    SOCIAL = "social", "Social"
+    OTHER = "other", "Other"
+
+
 class ArticlePage(BasePage):
     template = "pages/article_page.html"
     parent_page_types = ["news.NewsListingPage"]
@@ -110,12 +156,64 @@ class ArticlePage(BasePage):
     impact_model_secondary_metric = models.CharField(max_length=120, blank=True)
     impact_model_notes = models.TextField(blank=True)
     impact_model_source = models.CharField(max_length=160, blank=True)
+    editorial_status = models.CharField(
+        max_length=24,
+        choices=EditorialStatus.choices,
+        default=EditorialStatus.IDEA,
+    )
+    verification_status = models.CharField(
+        max_length=24,
+        choices=VerificationStatus.choices,
+        default=VerificationStatus.UNVERIFIED,
+    )
+    source_status = models.CharField(
+        max_length=24,
+        choices=SourceStatus.choices,
+        default=SourceStatus.SINGLE_SOURCE,
+    )
+    urgency_level = models.CharField(
+        max_length=16,
+        choices=UrgencyLevel.choices,
+        default=UrgencyLevel.NORMAL,
+    )
+    editorial_priority = models.PositiveSmallIntegerField(
+        default=50,
+        help_text="0-100 priority. Higher values are promoted first in editorial surfaces.",
+    )
+    promote_on_homepage = models.BooleanField(default=False)
+    promote_in_section = models.BooleanField(default=False)
+    show_in_live_signals = models.BooleanField(default=False)
+    show_as_breaking = models.BooleanField(default=False)
+    include_in_newsletter = models.BooleanField(default=False)
+    ai_generated_draft = models.BooleanField(default=False)
+    ai_researched = models.BooleanField(default=False)
+    ai_fact_checked = models.BooleanField(default=False)
+    human_review_required = models.BooleanField(default=True)
+    human_reviewed = models.BooleanField(default=False)
+    production_agent_name = models.CharField(max_length=120, blank=True)
+    editorial_reviewer = models.CharField(max_length=120, blank=True)
+    last_reviewed_at = models.DateTimeField(null=True, blank=True)
+    internal_editorial_note = models.TextField(blank=True)
+    verification_note = models.TextField(blank=True)
+    source_note = models.TextField(blank=True)
+    headline_checked = models.BooleanField(default=False)
+    sources_checked = models.BooleanField(default=False)
+    image_checked = models.BooleanField(default=False)
+    legal_risk_checked = models.BooleanField(default=False)
+    seo_checked = models.BooleanField(default=False)
+    mobile_preview_checked = models.BooleanField(default=False)
+    final_editorial_approval = models.BooleanField(default=False)
 
     search_fields = BasePage.search_fields + [
         index.SearchField("introduction"),
         index.SearchField("article_context_label"),
         index.SearchField("intelligence_note"),
         index.FilterField("topic"),
+        index.FilterField("editorial_status"),
+        index.FilterField("verification_status"),
+        index.FilterField("urgency_level"),
+        index.FilterField("promote_on_homepage"),
+        index.FilterField("promote_in_section"),
     ]
 
     content_panels = BasePage.content_panels + [
@@ -171,6 +269,55 @@ class ArticlePage(BasePage):
         ),
         MultiFieldPanel(
             [
+                FieldPanel("editorial_status"),
+                FieldPanel("urgency_level"),
+                FieldPanel("editorial_priority"),
+                FieldPanel("promote_on_homepage"),
+                FieldPanel("promote_in_section"),
+                FieldPanel("show_in_live_signals"),
+                FieldPanel("show_as_breaking"),
+                FieldPanel("include_in_newsletter"),
+            ],
+            heading="Editorial Workflow",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("verification_status"),
+                FieldPanel("source_status"),
+                InlinePanel("source_references", label="Source references"),
+                FieldPanel("headline_checked"),
+                FieldPanel("sources_checked"),
+                FieldPanel("image_checked"),
+                FieldPanel("legal_risk_checked"),
+                FieldPanel("seo_checked"),
+                FieldPanel("mobile_preview_checked"),
+                FieldPanel("final_editorial_approval"),
+            ],
+            heading="Verification & Sources",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("ai_generated_draft"),
+                FieldPanel("ai_researched"),
+                FieldPanel("ai_fact_checked"),
+                FieldPanel("human_review_required"),
+                FieldPanel("human_reviewed"),
+                FieldPanel("production_agent_name"),
+                FieldPanel("editorial_reviewer"),
+                FieldPanel("last_reviewed_at"),
+            ],
+            heading="AI Production Metadata",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("internal_editorial_note"),
+                FieldPanel("verification_note"),
+                FieldPanel("source_note"),
+            ],
+            heading="Internal Notes",
+        ),
+        MultiFieldPanel(
+            [
                 InlinePanel("key_takeaways", label="Key takeaways"),
                 InlinePanel("signal_tags", label="Signal tags"),
                 InlinePanel("intelligence_related_signals", label="Related signals"),
@@ -220,6 +367,50 @@ class ArticlePage(BasePage):
             if self.time_sensitivity
             else "30-90 days"
         )
+
+    @property
+    def public_workflow_badges(self):
+        badges = []
+        if self.show_as_breaking or self.urgency_level == UrgencyLevel.BREAKING:
+            badges.append("Breaking")
+        elif self.urgency_level in {UrgencyLevel.DEVELOPING, UrgencyLevel.URGENT}:
+            badges.append(self.get_urgency_level_display())
+        if self.verification_status == VerificationStatus.VERIFIED:
+            badges.append("Verified")
+        elif self.verification_status == VerificationStatus.CROSS_CHECKED:
+            badges.append("Cross checked")
+        if self.source_status in {SourceStatus.OFFICIAL_SOURCE, SourceStatus.PRIMARY_DOCUMENT}:
+            badges.append(self.get_source_status_display())
+        return badges
+
+    @classmethod
+    def editorial_queryset(cls):
+        return (
+            cls.objects.live()
+            .public()
+            .annotate(date=Coalesce("publication_date", "first_published_at"))
+            .select_related("listing_image", "author", "topic")
+        )
+
+    @classmethod
+    def homepage_articles(cls, limit=12):
+        queryset = cls.editorial_queryset()
+        promoted = list(
+            queryset.filter(promote_on_homepage=True).order_by(
+                "-editorial_priority",
+                "-date",
+            )[:limit]
+        )
+        if len(promoted) >= limit:
+            return promoted
+
+        promoted_ids = [article.id for article in promoted]
+        fallback = list(
+            queryset.exclude(id__in=promoted_ids).order_by("-date")[
+                : limit - len(promoted)
+            ]
+        )
+        return promoted + fallback
 
 
 class ArticleKeyTakeaway(Orderable):
@@ -300,6 +491,40 @@ class ArticleRelatedSignal(Orderable):
         if self.signal:
             return self.signal.link_url
         return self.fallback_url or "/news/"
+
+
+class ArticleSourceReference(Orderable):
+    page = ParentalKey(
+        ArticlePage,
+        on_delete=models.CASCADE,
+        related_name="source_references",
+    )
+    title = models.CharField(max_length=180)
+    url = models.URLField(max_length=500)
+    source_type = models.CharField(
+        max_length=16,
+        choices=SourceReferenceType.choices,
+        default=SourceReferenceType.OTHER,
+    )
+    confidence = models.CharField(
+        max_length=16,
+        choices=ConfidenceLevel.choices,
+        default=ConfidenceLevel.MEDIUM,
+    )
+    is_primary = models.BooleanField(default=False)
+    note = models.TextField(blank=True)
+
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("url"),
+        FieldPanel("source_type"),
+        FieldPanel("confidence"),
+        FieldPanel("is_primary"),
+        FieldPanel("note"),
+    ]
+
+    def __str__(self):
+        return self.title
 
 
 class NewsListingPage(BasePage):
@@ -777,11 +1002,8 @@ class IntelligenceSectionPage(BasePage):
 
     def get_matching_articles(self):
         queryset = (
-            ArticlePage.objects.live()
-            .public()
-            .annotate(date=Coalesce("publication_date", "first_published_at"))
-            .select_related("listing_image", "author", "topic")
-            .order_by("-date")
+            ArticlePage.editorial_queryset()
+            .order_by("-promote_in_section", "-editorial_priority", "-date")
         )
         query = Q()
         for term in self.matching_terms_list:

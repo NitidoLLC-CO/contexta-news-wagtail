@@ -12,6 +12,9 @@
 
                 <div class="cx-article-tags" aria-label="Article signal tags">
                     <span>{{ page.topic }}</span>
+                    {% for badge in page.public_workflow_badges %}
+                        <span>{{ badge }}</span>
+                    {% endfor %}
                     {% for tag in page.signal_tags.all %}
                         <span>{{ tag.label }}</span>
                     {% empty %}
@@ -114,6 +117,9 @@
         <main class="cx-article-body-panel" id="article-body">
             <div class="cx-article-trustbar">
                 <span>Professional intelligence brief</span>
+                {% if page.verification_status %}
+                    <span>Verification: {{ page.get_verification_status_display }}</span>
+                {% endif %}
                 <span>Confidence: {{ page.confidence_display }}</span>
                 <span>Source confidence: {{ page.source_confidence_display }}</span>
             </div>
