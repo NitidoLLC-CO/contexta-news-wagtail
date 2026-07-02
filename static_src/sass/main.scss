@@ -5941,3 +5941,59 @@ a {
         font-size: 0.5rem;
     }
 }
+
+/* Phase 2I.11: reference-style slim desktop footer */
+@media (min-width: 1024px) {
+    .cx-footer {
+        padding: 6px 0 7px;
+    }
+
+    .cx-footer__grid {
+        display: flex;
+        min-height: 28px;
+        gap: 24px;
+        align-items: center;
+    }
+
+    .cx-footer__brand {
+        display: flex;
+        flex: 0 0 auto;
+        gap: 0;
+        width: 34px;
+        max-width: 34px;
+        align-items: center;
+    }
+
+    .cx-footer__brand > div,
+    .cx-footer__brand p,
+    .cx-footer__grid .cx-footer__links:first-of-type {
+        display: none;
+    }
+
+    .cx-footer__brand .cx-brand__mark {
+        width: 24px;
+        height: 24px;
+    }
+
+    .cx-footer__grid .cx-footer__links:last-of-type {
+        display: flex;
+        flex: 1 1 auto;
+        flex-wrap: wrap;
+        gap: 22px;
+        align-items: center;
+        font-size: 0.48rem;
+    }
+
+    .cx-footer__bottom {
+        justify-content: flex-end;
+        min-height: 14px;
+        margin-top: 2px;
+        padding-top: 2px;
+        border-top-color: transparent;
+        font-size: 0.46rem;
+    }
+
+    .cx-footer__bottom span:last-child {
+        display: none;
+    }
+}
