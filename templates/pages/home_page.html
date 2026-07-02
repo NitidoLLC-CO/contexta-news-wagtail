@@ -129,16 +129,37 @@
             </div>
             <div class="cx-story-grid cx-story-grid--reference">
                 {% for article in top_stories %}
-                    {% if forloop.first %}
-                        {% include "components/card--article.html" with page=article variant="feature" %}
-                    {% elif forloop.counter == 4 %}
-                        {% include "components/card--article.html" with page=article variant="compact" %}
-                    {% else %}
+                    {% if forloop.counter <= 4 %}
                         {% include "components/card--article.html" with page=article %}
                     {% endif %}
                 {% empty %}
-                    {% include "components/card.html" with page=page %}
                 {% endfor %}
+                {% if top_stories|length < 4 %}
+                    <a class="cx-static-story" href="/ai/">
+                        <span class="cx-static-story__visual cx-static-story__visual--ai"></span>
+                        <small>AI Models</small>
+                        <strong>Frontier model performance breaks new reasoning record</strong>
+                        <em>12m ago</em>
+                    </a>
+                    <a class="cx-static-story" href="/technology/">
+                        <span class="cx-static-story__visual cx-static-story__visual--tech"></span>
+                        <small>Technology</small>
+                        <strong>Quantum networking enters practical era</strong>
+                        <em>23m ago</em>
+                    </a>
+                    <a class="cx-static-story" href="/companies/">
+                        <span class="cx-static-story__visual cx-static-story__visual--companies"></span>
+                        <small>Companies</small>
+                        <strong>Anthropic raises $4B at $18B valuation</strong>
+                        <em>45m ago</em>
+                    </a>
+                    <a class="cx-static-story" href="/markets/">
+                        <span class="cx-static-story__visual cx-static-story__visual--markets"></span>
+                        <small>Markets</small>
+                        <strong>EU AI Act: first compliance guidances released</strong>
+                        <em>2h ago</em>
+                    </a>
+                {% endif %}
             </div>
         </section>
 
